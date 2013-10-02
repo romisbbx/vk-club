@@ -1,0 +1,23 @@
+<div id="js-top-active"></div>
+
+<h2>Топ 100 подписчиков:</h2>
+
+<div id="js-top-100"></div>
+
+{% include 'pagination.twig' with {'count': 7, 'active': page + 1} %}
+
+<div id="js-user"></div>
+
+<div class="update">
+	<h3>Обновлено <span class="update-time">0</span> назад. Следующее обновление через: <span class="update-dif">3:27:12</span></h3>
+
+	<p>Handika&nbsp;&mdash; это не&nbsp;просто блог, где мы&nbsp;публикуем понравившиеся нам товары, но&nbsp;и&nbsp;сообщество людей с&nbsp;уникальным вкусом и&nbsp;оригинальным взглядом на&nbsp;окружающий мир. Мы&nbsp;хотим выделить читателей, чья активность помогает Хандике жить и&nbsp;двигаться вперед. Рейтинг подписчиков&nbsp;&mdash; это список людей, кому мы&nbsp;говорим Спасибо!</p>
+</div>
+
+<!-- VK Widget -->
+<div id="vk_subscribe-btn-container">
+	<div id="vk_subscribe-btn"></div>
+</div>
+<script type="text/javascript">
+	VK.Widgets.Subscribe("vk_subscribe-btn", {soft: 1}, -48475446);
+</script>

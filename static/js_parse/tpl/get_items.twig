@@ -1,0 +1,91 @@
+{# Получает данные от API по массиву items включая все страницы каждого элемента #}
+{# если превышено количество запросов к API (config.API_REQUEST_COUNT), #}
+{# то выдает индекс следующего не загруженного элемента. #}
+{# Если же какой то элемент загружен не полностью, #}
+{# то выдает offset для следующей загрузки и индекс этого элемента #}
+
+var params = {{ params|json_encode }},
+	items = {{ items|json_encode }},
+	data = [],
+	i = 0,
+	requestCount = 0,
+	response,
+	responseLength,
+	count;
+
+var log = "";
+
+while (i < items.length && requestCount < {{ config.API_REQUEST_COUNT }}) {
+	params = params + { {{ idParamName }}: items[i] };
+	response = API.{{ method }}(params);
+	requestCount = requestCount + 1;
+
+	if (response + "" == "") {
+		count = 0;
+		responseLength = 0;
+		log = log + " false";
+	} else {
+		{% if isArray %}
+			{% if responseName is empty %}
+				count = response[0];
+				data = data + response;
+				responseLength = response.length - 1;
+			{% else %}
+				count = response.{{ responseName }}[0];
+				data = data + response.{{ responseName }};
+				responseLength = response.{{ responseName }}.length - 1;
+			{% endif %}
+		{% else %}
+			count = response.count;
+			data = data + response.{{ responseName }};
+			responseLength = response.{{ responseName }}.length;
+		{% endif %}
+
+		log = log + " " + count;
+
+		{# если у текущего элемента есть еще страницы #}
+		if (count > responseLength) {
+			params = params + {offset: params.offset + params.count};
+
+			log = log + " (";
+
+			while (params.offset <= count && requestCount < {{ config.API_REQUEST_COUNT }}) {
+				response = API.{{ method }}(params);
+
+				if (response + "" == "") {
+					log = log + " false";
+				} else {
+					log = log + " " + responseLength;
+
+					requestCount = requestCount + 1;
+					params = params + {offset: params.offset + params.count};
+
+					{% if responseName is empty %}
+						data = data + response;
+					{% else %}
+						data = data + response.{{ responseName }};
+					{% endif %}
+				}
+			}
+
+			if (params.offset > count) {
+				{# если были загружены все страницы - обнуляем offset  #}
+				params = params + {offset: 0};
+			} else {
+				params = params + {offset: params.offset + params.count};
+				i = i - 1;
+			}
+
+			log = log + ") ";
+		}
+	}
+
+	i = i + 1;
+}
+
+return {
+	data: data,
+	index: i,
+	offset: params.offset,
+	log: log
+};

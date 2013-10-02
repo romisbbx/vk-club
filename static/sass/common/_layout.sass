@@ -1,0 +1,27 @@
+=layout_block
+	width: 100%
+	min-width: $layout-width + $layout-padding * 2
+
+
+.header
+	+layout_block
+	height: $header-height
+	background-color: $header-background
+	display: block
+	background-position: center
+
+.footer
+	+layout_block
+	height: $footer-height
+	background: #f1f7fb
+	position: relative
+
+.content,
+.panel
+	+layout_block
+
+.center
+	width: $layout-width
+	margin: 0 auto
+	padding: 0 $layout-padding
+	position: relative

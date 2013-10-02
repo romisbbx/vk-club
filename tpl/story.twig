@@ -1,0 +1,10 @@
+<table>
+{% for item in items %}
+	<tr>
+		<td>{{ item.user_id }}</td>
+		<td>{{ item.type }}</td>
+		<td>{{ item.date }}</td>
+		<td>{{ item.text }}</td>
+	</tr>
+{% endfor %}
+</table>

@@ -1,0 +1,23 @@
+Установка phantomjs
+
+cd /usr/local/share
+wget https://phantomjs.googlecode.com/files/phantomjs-1.9.2-linux-i686.tar.bz2
+tar xjf phantomjs-1.9.2-linux-i686.tar.bz2
+sudo ln -s /usr/local/share/phantomjs-1.9.2-linux-i686/bin/phantomjs /usr/local/share/phantomjs
+sudo ln -s /usr/local/share/phantomjs-1.9.2-linux-i686/bin/phantomjs /usr/local/bin/phantomjs
+sudo ln -s /usr/local/share/phantomjs-1.9.2-linux-i686/bin/phantomjs /usr/bin/phantomjs
+
+
+
+
+phantomjs rasterize.js https://vk.com/app3893886_4394894 screen.png
+phantomjs rasterize.js http://vk-club2.local/post.php top-100.png top-active.png
+
+phantomjs /var/www/admin/data/www/handika.net/phantom/rasterize.js https://vk.com/app3844646 /var/www/admin/data/www/handika.net/phantom/parse.png
+phantomjs /var/www/admin/data/www/handika.net/phantom/rasterize.js http://handika.net/post.php /var/www/admin/data/www/handika.net/phantom/top-100.png /var/www/admin/data/www/handika.net/phantom/top-active.png
+phantomjs /var/www/admin/data/www/handika.net/phantom/rasterize.js https://vk.com/app3908186 /var/www/admin/data/www/handika.net/phantom/post.png
+
+https://vk.com/club58328169
+
+post
+phantomjs rasterize.js https://vk.com/app3908186 screen.png

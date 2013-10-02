@@ -1,0 +1,146 @@
+.user
+	width: 100%
+	background: #602871
+	position: relative
+
+.user-top,
+.user-bottom
+	width: 720px
+	height: 20px
+	position: absolute
+	left: 0
+	background-repeat: no-repeat
+	overflow: hidden
+
+.user-top
+	top: -20px
+	background-image: url(/static/img/user-top.png)
+	background-position: right 0
+	z-index: -1
+
+.user-bottom
+	bottom: -20px
+	background-image: url(/static/img/user-bottom.png)
+	z-index: 1
+
+.user-info
+	width: 150px
+	margin-left: 45px
+	float: left
+	margin-top: -36px
+	text-align: center
+
+.user-avatar
+	width: 100px
+	height: 100px
+	background: #fff
+	padding: 5px
+	+border-radius(50%)
+	margin: 0 auto
+
+.user-avatar-image
+	width: 100px
+	height: 100px
+	+border-radius(50%)
+
+.user-rating
+	font-size: $font-size-40
+	color: #ffb30f
+
+.user-place
+	font-size: $font-size-15
+	color: #fff
+	margin-bottom: 8px
+
+.user-place-info
+	font-size: 11px
+	font-weight: $weight-bold
+	position: relative
+	margin-left: 3px
+
+	&:after,
+	&:before
+		content: ''
+		position: absolute
+		right: 50%
+		margin-right: -6px
+		display: none
+
+	&:after
+		top: -7px
+		+arrow(11px, 6px, up, #14cc80)
+
+	&:before
+		bottom: -7px
+		+arrow(11px, 6px, down, #f74304)
+
+	&.-top
+		color: #14cc80
+
+		&:after
+			display: block
+
+	&.-bottom
+		color: #f74304
+
+		&:before
+			display: block
+
+.user-info-status
+	color: #adb6bf
+	font-size: $font-size-10
+	margin-bottom: 4px
+
+.user-table
+	float: right
+	margin-right: 45px
+	margin-bottom: 35px
+	width: 430px
+	padding-top: 20px
+
+.user-table th,
+.user-table td
+	text-align: center
+	padding: 3px 10px
+
+	&.user-table-p0
+		padding: 3px 0
+
+	&.user-table-ta-left
+		text-align: left
+
+.user-table th
+	font-size: $font-size-10
+	font-weight: $weight-lighter
+	color: #f1f7fb
+	+opacity(0.3)
+
+.user-table td
+	font-size: $font-size-18
+	color: #fff
+
+	&.user-table-title
+		font-size: $font-size-14
+		text-align: left
+
+	&.user-table-rating
+		color: #ffb30f
+
+.user-icon
+	width: 14px
+	height: 14px
+	display: inline-block
+	background-repeat: no-repeat
+
+.user-table tr
+	&.no-active
+		+opacity(0.3)
+
+.user-corner
+	width: 36px
+	height: 30px
+	background: url(/static/img/corner.png)
+	position: absolute
+	top: -30px
+
+

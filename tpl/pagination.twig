@@ -1,0 +1,15 @@
+<div class="pagination">
+	{% if not strlk is empty %}
+		<li class="pagination-item -strlk-left"><span>&#8249;</span></li>
+	{% endif %}
+
+	{% for index in 1..count %}
+		<a href="/{{ index }}/" class="pagination-item js-ajax {% if index == active %} active{% endif %}" data-page="{{ index }}">{{ index }}</a>
+	{% endfor %}
+
+	{#<li class="pagination-item -more">...</li>#}
+
+	{% if not strlk is empty %}
+		<li class="pagination-item -strlk-right"><span>&#8250;</span></li>
+	{% endif %}
+</div>

@@ -1,0 +1,41 @@
+<div class="admin-table">
+	<table class="admin-table-table">
+		<tr class="admin-table-row">
+			<th class="admin-table-col">Позиция</th>
+			<th class="admin-table-col"></th>
+			<th class="admin-table-col">Подписчик</th>
+			<th class="admin-table-col">Рейтинг</th>
+			<th class="admin-table-col">Репосты</th>
+			<th class="admin-table-col">Лайки</th>
+			<th class="admin-table-col">Каменты</th>
+			<th class="admin-table-col -vendor">Вендор</th>
+			<th class="admin-table-col -ban">Бан</th>
+		</tr>
+
+		{% for index in 1..10 %}
+			<tr class="admin-table-row">
+				<td class="admin-table-col">
+					{{ index }}
+					{% if index % 2 == 0 %}
+						<span class="top-100-avatar-info -top">+1</span>
+					{% else %}
+						<span class="top-100-avatar-info -bottom">&ndash;1</span>
+					{% endif %}
+				</td>
+				<td class="admin-table-col">
+					<img class="admin-table-avatar" src="/static/img/avatar.jpg" />
+				</td>
+				<td class="admin-table-col">
+					Маргарита Винокурова<br />
+					<span class="admin-table-city">Самара</span>
+				</td>
+				<td class="admin-table-col -rating">235,8</td>
+				<td class="admin-table-col">45</td>
+				<td class="admin-table-col">23</td>
+				<td class="admin-table-col">19</td>
+				<td class="admin-table-col -vendor"><input class="admin-table-check" type="checkbox" /></td>
+				<td class="admin-table-col -ban"><input class="admin-table-check" type="checkbox" /></td>
+			</tr>
+		{% endfor %}
+	</table>
+</div>

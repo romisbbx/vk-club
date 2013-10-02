@@ -1,0 +1,119 @@
+// modify HTML5 Boilerplate
+//
+// What follows is the result of much research on cross-browser styling.
+// Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+// Kroc Camen, and the H5BP dev community and team.
+
+// ==========================================================================
+// Base styles: opinionated defaults
+// ==========================================================================
+
+html
+	height: 100%
+
+html,
+body,
+button,
+input,
+select,
+textarea
+	color: $base-color
+
+body
+	font-size: 1em
+	font-family: $base-font
+	font-weight: $weight-normal
+	line-height: 1.4
+	min-height: 100%
+	height: auto !important
+	height: 100%
+	position: relative
+	background: $base-background
+
+h1
+	text-align: center
+	font-size: $font-size-26
+	font-weight: $weight-normal
+	color: #6e3c7f
+	margin: 1.188em 0 0.688em
+
+h2
+	color: #6e3c7f
+	text-align: center
+	font-size: $font-size-24
+	font-weight: $weight-normal
+
+h3
+	color: #adb6bf
+	text-align: center
+	font-size: $font-size-18
+	font-weight: $weight-normal
+
+p
+	color: #434d57
+	font-size: $font-size-12
+	font-weight: $weight-normal
+	line-height: $font-size-21
+	margin: 0 0 25px 0
+
+b,
+strong
+	font-weight: $weight-bold
+
+a:focus
+	outline: none
+
+input,
+textarea
+	font-weight: $weight-normal
+
+// Remove text-shadow in selection highlight: h5bp.com/i
+// These selection rule sets have to be separate.
+// Customize the background color to match your design.
+
+::-moz-selection
+	background: #b3d4fc
+	text-shadow: none
+
+::selection
+	background: #b3d4fc
+	text-shadow: none
+
+// A better looking default horizontal rule
+
+hr
+	display: block
+	height: 1px
+	border: 0
+	border-top: 1px solid #ccc
+	margin: 1em 0
+	padding: 0
+
+// Remove the gap between images and the bottom of their containers: h5bp.com/i/440
+
+img
+	vertical-align: middle
+
+// Remove default fieldset styles.
+
+fieldset
+	border: 0
+	margin: 0
+	padding: 0
+
+
+// Allow only vertical resizing of textareas.
+
+textarea
+	resize: vertical
+
+
+// ==========================================================================
+// Chrome Frame prompt
+// ==========================================================================
+
+.chromeframe
+	margin: 0.2em 0
+	background: #ccc
+	color: #000
+	padding: 0.2em 0

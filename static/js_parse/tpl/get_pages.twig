@@ -1,0 +1,19 @@
+var params = {{ params|json_encode }},
+	data = API.{{ method }}(params),
+	count = data[0],
+	maxOffset = params.offset + params.count * {{ config.API_REQUEST_COUNT }};
+
+if (count + "" == "") {
+	return [];
+}
+
+if (count <= params.count) {
+	return data;
+}
+
+params = params + {offset: params.offset + params.count};
+while (params.offset <= count && params.offset < maxOffset) {
+	data = data + API.{{ method }}(params);
+	params = params + {offset: params.offset + params.count};
+}
+return data;

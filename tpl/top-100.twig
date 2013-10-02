@@ -1,0 +1,54 @@
+<div class="top-100">
+	{% for groupe in items %}
+		<div class="top-100-col">
+			{% for item in groupe %}
+				<div class="top-100-item">
+					<a class="top-100-link" target="_blank" href="http://vk.com/id{{ item.uid }}"></a>
+					<img class="top-100-avatar" src="{{ item.photo_50 }}" />
+					<div class="top-100-r_content">
+						<div class="top-100-name">{{ item.first_name }} {{ item.last_name }}</div>
+						<div class="top-100-city">{{ item.city }}</div>
+					</div>
+					<div class="top-100-number">
+						{{ item.index }}
+						{% if item.shift and item.shift != 0 %}
+						<span class="top-100-info {% if item.shift > 0 %}-top{% else %}-bottom{% endif %}">
+							{% if item.shift >= 100 %}
+								>99
+							{% else %}
+								{% if item.shift > 0 %}
+									+{{ item.shift }}
+								{% else %}
+									{{ item.shift }}
+								{% endif %}
+							{% endif %}
+						</span>
+						{% endif %}
+					</div>
+					<div class="clearfix"></div>
+					<div class="top-100-activity">
+						<span class="top-100-activity-rating">{{ item.rating }}</span>
+						<ul class="top-100-activity-list">
+							<li class="top-100-activity-item">
+								<i class="top-100-activity-icon icon-repost"></i>{{ item.repost }}
+							</li>
+							<li class="top-100-activity-item">
+								<i class="top-100-activity-icon icon-teme"></i>0{{ item.teme }}
+							</li>
+							<li class="top-100-activity-item">
+								<i class="top-100-activity-icon icon-foto"></i>0{{ item.foto }}
+							</li>
+							<li class="top-100-activity-item">
+								<i class="top-100-activity-icon icon-comment"></i>{{ item.comment }}
+							</li>
+							<li class="top-100-activity-item">
+								<i class="top-100-activity-icon icon-like"></i>{{ item.like }}
+							</li>
+						</ul>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	{% endfor %}
+	<div class="clearfix"></div>
+</div>

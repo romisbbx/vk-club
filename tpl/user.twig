@@ -1,0 +1,90 @@
+<div class="user">
+	<div class="user-info">
+		<div class="user-avatar">
+			<img class="user-avatar-image" src="{{ user.photo_100 }}" />
+		</div>
+		<div class="user-rating">{{ user.rating }}</div>
+		<div class="user-place">
+			{{ user.place + 1 }} место
+			{% if user.shift and user.shift != 0 %}
+				<span class="user-place-info {% if user.shift > 0 %}-top{% else %}-bottom{% endif %}">
+					{% if item.shift >= 100 %}
+						>99
+					{% else %}
+						{% if item.shift > 0 %}
+							+{{ item.shift }}
+						{% else %}
+							{{ item.shift }}
+						{% endif %}
+					{% endif %}
+				</span>
+			{% endif %}
+		</div>
+
+		{#<div class="user-info-status">Подписчик недели (2 раза)</div>#}
+		{#<div class="user-info-status">Подписчик дня (12 раз)</div>#}
+		{#<div class="user-info-status">Лайкер</div>#}
+	</div>
+	<div class="user-table">
+		<table>
+			<tr>
+				<th class="user-table-p0"></th>
+				<th class="user-table-ta-left">Ваши&nbsp;действия&nbsp;в&nbsp;сообществе</th>
+				<th>Количество</th>
+				<th></th>
+				<th>Баллы</th>
+				<th></th>
+				<th>Рейтинг</th>
+			</tr>
+			<tr{% if user.repost == 0 %} class="no-active"{% endif %}>
+				<td class="user-table-p0"><i class="user-icon icon-repost-user"></i></td>
+				<td class="user-table-title">Репосты</td>
+				<td>{{ user.repost }}</td>
+				<td>x</td>
+				<td>{{ setting.repost }}</td>
+				<td>=</td>
+				<td class="user-table-rating">{{ (user.repost*setting.repost)|number_format(1, ',') }}</td>
+			</tr>
+			<tr{% if user.topic == 0 %} class="no-active"{% endif %}>
+				<td class="user-table-p0"><i class="user-icon icon-teme-user"></i></td>
+				<td class="user-table-title">Темы&nbsp;в&nbsp;обсуждениях</td>
+				<td>{{ user.topic }}</td>
+				<td>x</td>
+				<td>{{ setting.topic }}</td>
+				<td>=</td>
+				<td class="user-table-rating">{{ (user.topic*setting.topic)|number_format(1, ',') }}</td>
+			</tr>
+			<tr{% if user.photo == 0 %} class="no-active"{% endif %}>
+				<td class="user-table-p0"><i class="user-icon icon-foto-user"></i></td>
+				<td class="user-table-title">Загрузка&nbsp;фото</td>
+				<td>{{ user.photo }}</td>
+				<td>x</td>
+				<td>{{ setting.photo }}</td>
+				<td>=</td>
+				<td class="user-table-rating">{{ (user.photo*setting.photo)|number_format(1, ',') }}</td>
+			</tr>
+			<tr{% if user.comment == 0 %} class="no-active"{% endif %}>
+				<td class="user-table-p0"><i class="user-icon icon-comment-user"></i></td>
+				<td class="user-table-title">Комментарии</td>
+				<td>{{ user.comment }}</td>
+				<td>x</td>
+				<td>{{ setting.comment }}</td>
+				<td>=</td>
+				<td class="user-table-rating">{{ (user.comment*setting.comment)|number_format(1, ',') }}</td>
+			</tr>
+			<tr{% if user.like == 0 %} class="no-active"{% endif %}>
+				<td class="user-table-p0"><i class="user-icon icon-like-user"></i></td>
+				<td class="user-table-title">Лайки</td>
+				<td>{{ user.like }}</td>
+				<td>x</td>
+				<td>{{ setting.like }}</td>
+				<td>=</td>
+				<td class="user-table-rating">{{ (user.like*setting.like)|number_format(1, ',') }}</td>
+			</tr>
+		</table>
+	</div>
+	<div class="clearfix"></div>
+	<div class="user-top"></div>
+	<div class="user-bottom"></div>
+	<div class="user-corner" style="left: -100000px;"></div>
+</div>

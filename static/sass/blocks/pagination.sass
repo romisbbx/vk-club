@@ -1,0 +1,53 @@
+.pagination
+	text-align: center
+	position: relative
+	height: 40px
+	padding-bottom: 20px
+
+.pagination-item
+	display: inline-block
+	width: 25px
+	height: 25px
+	line-height: 25px
+	+border-radius(50%)
+	color: $link-color
+	font-size: $font-size-13
+	font-weight: $weight-bold
+	text-align: center
+	cursor: pointer
+	background: #f1f7fb
+	text-decoration: none
+
+	&.active,
+	&:hover
+		color: #fff
+		background: $link-color
+
+	&.-more
+		color: #c6cdd8
+		cursor: default
+
+		&:hover
+			background: none
+			color: #c6cdd8
+
+	&.-strlk-left,
+	&.-strlk-right
+		background: none
+		color: #c6cdd8
+		position: relative
+
+		&:hover
+			color: $link-color
+
+	&.-strlk-left span,
+	&.-strlk-right span
+		position: absolute
+		top: 5px
+		font-size: 35px
+
+	&.-strlk-left span
+		left: 0
+
+	&.-strlk-right span
+		right: 0
