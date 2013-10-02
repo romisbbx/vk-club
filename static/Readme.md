@@ -7,7 +7,9 @@
 	Node.js ставить из сырцов и после этого:
 	
 		ln -s /usr/local/bin/node /usr/sbin/node
-		curl https://npmjs.org/install.sh | sh		
+		curl https://npmjs.org/install.sh | sh
+
+		https://sekati.com/etc/install-nodejs-on-debian-squeeze
 
 2.	Устанавливаем Compass:
 
