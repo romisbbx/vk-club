@@ -21,7 +21,7 @@ phantomjs ~/apps/vk-club.local/www/phantom/rasterize.js https://vk.com/app390818
 3. Команды рабочий сервер
 
 # parse
-phantomjs /var/www/admin/data/www/handika.net/phantom/rasterize.js https://vk.com/app3844646
+phantomjs /var/www/admin/data/www/handika.net/phantom/rasterize.js https://vk.com/app3912614
 
 #create screen
 phantomjs /var/www/admin/data/www/handika.net/phantom/rasterize.js http://handika.net/post.php /var/www/admin/data/www/handika.net/phantom/_build/

@@ -97,7 +97,7 @@ Post.prototype = {
 				params.push('image_url=' + photo_url);
 
 				$
-					.get('/post_photo?'+params.join('&'))
+					.get('/post_photo.php?'+params.join('&'))
 					.success(function(data){
 						data = $.parseJSON(data);
 						data.gid = window.config.VK_GROUPE_ID;

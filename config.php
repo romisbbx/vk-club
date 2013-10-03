@@ -12,7 +12,7 @@ if ($_SERVER['SERVER_NAME'] == 'vk-club.local') {
 	define('MYSQL_DB', 'p177982_vk-club');
 }
 
-define('VK_API_ID', '3844646'); // Insert here id of your application
-define('VK_SECRET_KEY', '8qhrAKOtML8yltzoj4g9'); // Insert here secret key of your application
+define('VK_API_ID', '3912614'); // Insert here id of your application
+define('VK_SECRET_KEY', 'eS0KrXT5S2zWNvS9tiyJ'); // Insert here secret key of your application
 
 ?>
