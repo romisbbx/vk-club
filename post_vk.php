@@ -25,9 +25,15 @@
 			window.App = new window.WebApp();
 
 			window.config = {};
-			window.config.VK_GROUPE_ID = 58328169;
-			window.config.VK_ALBUM_ID = 180761478;
+
+			if (window.location.host == 'vk-club.local') {
+				window.config.VK_GROUPE_ID = 58328169;
+			} else {
+				window.config.VK_GROUPE_ID = 48475446;
+			}
+
 			window.config.VK_POST_OFFSET = 60; // смещения для отложенного постинга в минутах
+			window.config.VK_POST_MESSAGE = 'Рейтинг на сегодня';
 
 			new Post();
 		});

@@ -80,9 +80,8 @@ Post.prototype = {
 	},
 
 	postPhoto: function (photo_url, callback) {
-		VK.api('photos.getUploadServer', {
-			group_id: window.config.VK_GROUPE_ID,
-			album_id: window.config.VK_ALBUM_ID
+		VK.api('photos.getWallUploadServer', {
+			group_id: window.config.VK_GROUPE_ID
 		}, function (data) {
 			if (data && data.response && data.response.upload_url) {
 				var url = data.response.upload_url,
@@ -95,15 +94,18 @@ Post.prototype = {
 					.get('/post_photo?'+params.join('&'))
 					.success(function(data){
 						data = $.parseJSON(data);
+						data.gid = window.config.VK_GROUPE_ID;
 
-						VK.api('photos.save', data, callback);
+						VK.api('photos.saveWallPhoto', data, callback);
 					});
 			}
 		});
 	},
 
 	post: function () {
-		this.postData = {};
+		this.postData = {
+			publishDate: Math.ceil((new Date().valueOf() + 1000 * 60 * window.config.VK_POST_OFFSET) / 1000)
+		};
 
 		this.postPhoto('phantom/_build/top-active.png', App._bind(function (data) {
 			this.postData.photoTA = data.response[0];
@@ -121,12 +123,12 @@ Post.prototype = {
 						VK.api('wall.post', {
 							owner_id: -window.config.VK_GROUPE_ID,
 							from_group: 1,
-							message: 'Test message 2',
-							publish_date: Math.ceil((new Date().valueOf() + 1000 * 60 * window.config.VK_POST_OFFSET) / 1000),
-							attachments: 'photo-' + window.config.VK_GROUPE_ID + '_' + this.postData.photoTA.pid + ','
-								+ 'photo-' + window.config.VK_GROUPE_ID + '_' + this.postData.photoT100_1.pid + ','
-								+ 'photo-' + window.config.VK_GROUPE_ID + '_' + this.postData.photoT100_19.pid + ','
-								+ 'photo-' + window.config.VK_GROUPE_ID + '_' + this.postData.photoT100_37.pid
+							message: window.config.VK_POST_MESSAGE,
+							publish_date: this.postData.publishDate,
+							attachments: this.postData.photoTA.id + ','
+								+ this.postData.photoT100_1.id + ','
+								+ this.postData.photoT100_19.id + ','
+								+ this.postData.photoT100_37.id
 						}, function () {
 							alert('Complete!');
 						});

@@ -41,22 +41,19 @@ if (system.args.length < 2) {
 		console.log('CONSOLE: ' + msg);
 
 		if (msg == 'top-active') {
-			page.viewportSize = { width: 800, height: 450 };
 			page.render(savePath + 'top-active.png');
+			page.viewportSize = { width: 760, height: 550 };
 		}
 
 		if (msg == 'top-100-1') {
-			page.viewportSize = { width: 760, height: 550 };
 			page.render(savePath + 'top-100-1.png');
 		}
 
 		if (msg == 'top-100-19') {
-			page.viewportSize = { width: 760, height: 550 };
 			page.render(savePath + 'top-100-19.png');
 		}
 
 		if (msg == 'top-100-37') {
-			page.viewportSize = { width: 760, height: 550 };
 			page.render(savePath + 'top-100-37.png');
 		}
 
