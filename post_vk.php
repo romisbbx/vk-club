@@ -27,7 +27,7 @@
 			window.config = {};
 			window.config.VK_GROUPE_ID = 58328169;
 			window.config.VK_ALBUM_ID = 180761478;
-			window.config.VK_POST_OFFSET = 5; // смещения для отложенного постинга в минутах
+			window.config.VK_POST_OFFSET = 60; // смещения для отложенного постинга в минутах
 
 			new Post();
 		});
