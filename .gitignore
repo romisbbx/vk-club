@@ -16,3 +16,6 @@ node_modules/
 
 # SASS cache
 .sass-cache
+
+# Phantomjs image build
+phantom/_build/

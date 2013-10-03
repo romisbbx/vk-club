@@ -10,42 +10,45 @@ window.Post = function () {
 };
 
 Post.prototype = {
-	render: function (data) {
-		for (var i = 0; i < data.users.length; i++) {
-			data.users[i].index = i + 1;
-		}
-
-		data.users = this.sortUserData(data.users);
-
-		var top100 = {
-				users: App.splitArray(data.users, 3)
-			};
-
-		App.renderTemplate('post', top100, App._bind(function (html) {
+	renderTopActive: function (callback) {
+		App.renderTemplate('post-top-active', {
+			users: this.data.users_last_day.reverse(),
+			day: this.getDayOfWeek()
+		}, App._bind(function (html) {
 			App.layouts.content
 				.empty()
 				.append(html);
 
-			setTimeout(App._bind(function (){
-				console.log('top-100'); // метка для phantomjs
+			setTimeout(function () {
+				console.log('top-active'); // метка для phantomjs
 
-				setTimeout(App._bind(function (){
-					data.users_last_day = this.sortUserData(data.users_last_day, 1);
-					data.users_last_day = data.users_last_day.slice(0, 5);
-					data.users_last_day = this.sortUserData(data.users_last_day, -1);
-					data.day = this.getDayOfWeek();
+				if (callback && typeof(callback) === 'function') {
+					callback();
+				}
+			}, 1000);
+		}, this));
+	},
 
-					App.renderTemplate('post2', data, App._bind(function (html) {
-						App.layouts.content
-							.empty()
-							.append(html);
+	renderTop100: function (indexStart, indexEnd, callback) {
+		var data = {
+			users: this.data.users.slice(indexStart - 1, indexEnd),
+			title: indexStart + '&mdash;' + indexEnd
+		};
 
-						setTimeout(function (){
-							alert('Complete!');
-						}, 1000);
-					}, this));
-				}, this), 1000);
-			}, this), 1000);
+		data.users = App.splitArray(data.users, 3);
+
+		App.renderTemplate('post-top-100', data, App._bind(function (html) {
+			App.layouts.content
+				.empty()
+				.append(html);
+
+			setTimeout(function () {
+				console.log('top-100-' + indexStart); // метка для phantomjs
+
+				if (callback && typeof(callback) === 'function') {
+					callback();
+				}
+			}, 1000);
 		}, this));
 	},
 
@@ -55,29 +58,24 @@ Post.prototype = {
 			url: '/user_data.php',
 			type: 'POST',
 			success: App._bind(function (response) {
-				this.render(response);
+				this.data = response;
+
+				for (var i = 0; i < this.data.users.length; i++) {
+					this.data.users[i].index = i + 1;
+				}
+
+				this.renderTopActive(App._bind(function () {
+					this.renderTop100(1, 18, App._bind(function () {
+						this.renderTop100(19, 36, App._bind(function () {
+							this.renderTop100(37, 54, App._bind(function () {
+								setTimeout(function () {
+									alert('Complete!');
+								}, 1000);
+							}, this));
+						}, this));
+					}, this));
+				}, this));
 			}, this)
-		});
-	},
-
-	// сортировка по рейтингу имени
-	sortUserData: function (data, invert) {
-		invert = invert || 1;
-
-		return data.sort(function (a, b){
-			if (a.rating == b.rating) {
-				if (a.first_name < b.first_name) {
-					return -1 * invert;
-				}
-				if (a.first_name > b.first_name) {
-					return 1 * invert;
-				}
-				if (a.first_name == b.first_name) {
-					return 0;
-				}
-			} else {
-				return b.rating - a.rating * invert;
-			}
 		});
 	},
 
@@ -105,23 +103,35 @@ Post.prototype = {
 	},
 
 	post: function () {
-		this.postPhoto('phantom/top-active.png', App._bind(function (data) {
-			this.photoTA = data.response[0];
+		this.postData = {};
 
-			this.postPhoto('phantom/top-100.png', App._bind(function (data) {
-				this.photoT100 = data.response[0];
+		this.postPhoto('phantom/_build/top-active.png', App._bind(function (data) {
+			this.postData.photoTA = data.response[0];
 
-				console.log('post'); // метка для phantomjs
-				VK.api('wall.post', {
-					owner_id: -window.config.VK_GROUPE_ID,
-					from_group: 1,
-					message: 'Test message 2',
-					publish_date: Math.ceil((new Date().valueOf() + 1000 * 60 * window.config.VK_POST_OFFSET) / 1000),
-					attachments: 'photo-' + window.config.VK_GROUPE_ID + '_' + this.photoT100.pid + ','
-						+ 'photo-' + window.config.VK_GROUPE_ID + '_' + this.photoTA.pid
-				}, function () {
-					alert('Complete!');
-				});
+			this.postPhoto('phantom/_build/top-100-1.png', App._bind(function (data) {
+				this.postData.photoT100_1 = data.response[0];
+
+				this.postPhoto('phantom/_build/top-100-19.png', App._bind(function (data) {
+					this.postData.photoT100_19 = data.response[0];
+
+					this.postPhoto('phantom/_build/top-100-37.png', App._bind(function (data) {
+						this.postData.photoT100_37 = data.response[0];
+
+						console.log('post'); // метка для phantomjs
+						VK.api('wall.post', {
+							owner_id: -window.config.VK_GROUPE_ID,
+							from_group: 1,
+							message: 'Test message 2',
+							publish_date: Math.ceil((new Date().valueOf() + 1000 * 60 * window.config.VK_POST_OFFSET) / 1000),
+							attachments: 'photo-' + window.config.VK_GROUPE_ID + '_' + this.postData.photoTA.pid + ','
+								+ 'photo-' + window.config.VK_GROUPE_ID + '_' + this.postData.photoT100_1.pid + ','
+								+ 'photo-' + window.config.VK_GROUPE_ID + '_' + this.postData.photoT100_19.pid + ','
+								+ 'photo-' + window.config.VK_GROUPE_ID + '_' + this.postData.photoT100_37.pid
+						}, function () {
+							alert('Complete!');
+						});
+					}, this));
+				}, this));
 			}, this));
 		}, this));
 	},
