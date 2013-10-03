@@ -32,8 +32,7 @@
 				window.config.VK_GROUPE_ID = 48475446;
 			}
 
-			window.config.VK_POST_OFFSET = 60; // смещения для отложенного постинга в минутах
-			window.config.VK_POST_MESSAGE = 'Рейтинг на сегодня';
+			window.config.VK_POST_OFFSET = 60 * 9; // смещения для отложенного постинга в минутах
 
 			new Post();
 		});

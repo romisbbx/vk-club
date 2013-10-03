@@ -3,9 +3,23 @@ window.Post = function () {
 		params = url.split('?')[1];
 
 	if (params) { // зашли через VK
-		this.post();
+		this.getUsers(App._bind(function () {
+			this.post(true);
+		}, this));
 	} else {
-		this.getUsers();
+		this.getUsers(App._bind(function () {
+			this.renderTopActive(App._bind(function () {
+				this.renderTop100(1, 18, App._bind(function () {
+					this.renderTop100(19, 36, App._bind(function () {
+						this.renderTop100(37, 54, App._bind(function () {
+							setTimeout(function () {
+								alert('Complete!');
+							}, 1000);
+						}, this));
+					}, this));
+				}, this));
+			}, this));
+		}, this));
 	}
 };
 
@@ -52,7 +66,7 @@ Post.prototype = {
 		}, this));
 	},
 
-	getUsers: function () {
+	getUsers: function (callback) {
 		$.ajax({
 			dataType: 'json',
 			url: '/user_data.php',
@@ -64,17 +78,9 @@ Post.prototype = {
 					this.data.users[i].index = i + 1;
 				}
 
-				this.renderTopActive(App._bind(function () {
-					this.renderTop100(1, 18, App._bind(function () {
-						this.renderTop100(19, 36, App._bind(function () {
-							this.renderTop100(37, 54, App._bind(function () {
-								setTimeout(function () {
-									alert('Complete!');
-								}, 1000);
-							}, this));
-						}, this));
-					}, this));
-				}, this));
+				if (callback && typeof(callback) === 'function') {
+					callback();
+				}
 			}, this)
 		});
 	},
@@ -102,40 +108,59 @@ Post.prototype = {
 		});
 	},
 
-	post: function () {
+	post: function (everyday) {
 		this.postData = {
 			publishDate: Math.ceil((new Date().valueOf() + 1000 * 60 * window.config.VK_POST_OFFSET) / 1000)
 		};
 
-		this.postPhoto('phantom/_build/top-active.png', App._bind(function (data) {
-			this.postData.photoTA = data.response[0];
+		if (everyday) {
+			// ежедневный пост
+			this.postPhoto('phantom/_build/top-active.png', App._bind(function (data) {
+				this.postData.photoTA = data.response[0];
 
-			this.postPhoto('phantom/_build/top-100-1.png', App._bind(function (data) {
-				this.postData.photoT100_1 = data.response[0];
+				console.log('post'); // метка для phantomjs
+				VK.api('wall.post', {
+					owner_id: -window.config.VK_GROUPE_ID,
+					from_group: 1,
+					message: this.getMessage(everyday),
+					publish_date: this.postData.publishDate,
+					attachments: this.postData.photoTA.id
+				}, function () {
+					alert('Complete!');
+				});
+			}, this));
+		} else {
+			// еженедельный пост
+			this.postPhoto('phantom/_build/top-active.png', App._bind(function (data) {
+				this.postData.photoTA = data.response[0];
 
-				this.postPhoto('phantom/_build/top-100-19.png', App._bind(function (data) {
-					this.postData.photoT100_19 = data.response[0];
+				this.postPhoto('phantom/_build/top-100-1.png', App._bind(function (data) {
+					this.postData.photoT100_1 = data.response[0];
 
-					this.postPhoto('phantom/_build/top-100-37.png', App._bind(function (data) {
-						this.postData.photoT100_37 = data.response[0];
+					this.postPhoto('phantom/_build/top-100-19.png', App._bind(function (data) {
+						this.postData.photoT100_19 = data.response[0];
 
-						console.log('post'); // метка для phantomjs
-						VK.api('wall.post', {
-							owner_id: -window.config.VK_GROUPE_ID,
-							from_group: 1,
-							message: window.config.VK_POST_MESSAGE,
-							publish_date: this.postData.publishDate,
-							attachments: this.postData.photoTA.id + ','
-								+ this.postData.photoT100_1.id + ','
-								+ this.postData.photoT100_19.id + ','
-								+ this.postData.photoT100_37.id
-						}, function () {
-							alert('Complete!');
-						});
+						this.postPhoto('phantom/_build/top-100-37.png', App._bind(function (data) {
+							this.postData.photoT100_37 = data.response[0];
+
+							console.log('post'); // метка для phantomjs
+							VK.api('wall.post', {
+								owner_id: -window.config.VK_GROUPE_ID,
+								from_group: 1,
+								message: this.getMessage(everyday),
+								publish_date: this.postData.publishDate,
+								attachments: this.postData.photoTA.id + ','
+									+ this.postData.photoT100_1.id + ','
+									+ this.postData.photoT100_19.id + ','
+									+ this.postData.photoT100_37.id
+							}, function () {
+								alert('Complete!');
+							});
+						}, this));
 					}, this));
 				}, this));
 			}, this));
-		}, this));
+		}
 	},
 
 	getDayOfWeek: function () {
@@ -143,5 +168,22 @@ Post.prototype = {
 			daysTitle = ['субботы', 'воскресения', 'понедельника', 'вторника', 'среды', 'четверга', 'пятницы'];
 
 		return daysTitle[day];
+	},
+
+	getMessage: function (everyday) {
+		var users = this.data.users_last_day.reverse(),
+			text = 'Поздравляем самых активных подписчиков ' + this.getDayOfWeek() + ':';
+
+		for (var i = 0; i < users.length; i++) {
+			if (i < users.length - 1) {
+				text += ' @id' + users[i].id + ',';
+			} else {
+				text += ' и @id' + users[i].id;
+			}
+		}
+
+		text += '\n\n';
+		text += 'Посмотреть полный рейтинг клуба — vk.com/app3880825';
+		return text;
 	}
 };
