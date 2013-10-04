@@ -1,6 +1,11 @@
 <?php
 
-$data['file1'] = new CurlFile($_GET['image_url'], 'image/png');
+if (class_exists('CurlFile')) {
+	$data['file1'] = new CurlFile($_GET['image_url'], 'image/png');
+} else {
+	$data['file1'] = '@'.realpath($_GET['image_url']);
+}
+
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $_GET['upload_url']);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
