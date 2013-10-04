@@ -105,6 +105,27 @@ class App {
 		}
 	}
 
+	// если за прошедщий день слишком мало юзеров проявили активность, то берем остальных из топ 100
+	function correct_user_last_day_length() {
+		$user_last_day_count = $this->db->getOne('SELECT COUNT(id) FROM user_data_last_day');
+		$count = 5 - $user_last_day_count;
+
+		if ($count > 0) {
+			$data = $this->db->getAll('SELECT * FROM user_data WHERE (id > 101 AND banned < 1) ORDER BY ?n DESC, ?n ASC LIMIT ?i', 'rating', 'first_name', $count);
+
+			foreach ($data as $item) {
+				$item['rating'] = 0;
+				$item['repost'] = 0;
+				$item['like'] = 0;
+				$item['comment'] = 0;
+				$item['topic'] = 0;
+				$item['photo'] = 0;
+
+				$this->db->query('INSERT INTO user_data_last_day SET ?u', $item);
+			}
+		}
+	}
+
 	function time() {
 		$this->db->query('UPDATE setting SET ?u WHERE id = 1', array(
 			'update_date' => time(),
@@ -117,8 +138,15 @@ class App {
 $app = new App();
 
 $app->get_shift();
+
+$app->db->query('TRUNCATE TABLE user_data');
 $app->get_user_data('user', 'user_data');
+
+$app->db->query('TRUNCATE TABLE user_data_last_day');
 $app->get_user_data('user_last_day', 'user_data_last_day');
+
+$app->correct_user_last_day_length();
+
 $app->time();
 
 echo 'true';

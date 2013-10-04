@@ -13,9 +13,6 @@ $db = new SafeMySQL(array(
 
 $db->query('TRUNCATE TABLE user_old');
 $db->query('TRUNCATE TABLE story');
-$db->query('TRUNCATE TABLE user_data');
-$db->query('TRUNCATE TABLE user_last_day');
-$db->query('TRUNCATE TABLE user_data_last_day');
 $db->query('INSERT user_old SELECT * FROM user');
 $db->query('TRUNCATE TABLE user');
 

@@ -40,9 +40,9 @@ class App {
 	}
 }
 
-
 $app = new App();
 
+$app->db->query('TRUNCATE TABLE user_last_day');
 $app->add_to_base();
 
 echo 'true';
