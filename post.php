@@ -14,6 +14,12 @@
 	<link type="text/css" rel="stylesheet" href="/static/_build/css/icons/icons.data.svg.css" />
 	<link type="text/css" rel="stylesheet" href="/static/_build/css/main.css" />
 
+	<style>
+		h2 {
+			font-family: 'Arial';
+		}
+	</style>
+
 	<script type="text/javascript" src="/static/js/libs/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="/static/js/libs/lodash.min.js"></script>
 	<script type="text/javascript" src="/static/js/libs/twig.min.js"></script>
