@@ -27,6 +27,6 @@ phantomjs /var/www/admin/data/www/handika.net/phantom/rasterize.js https://vk.co
 phantomjs /var/www/admin/data/www/handika.net/phantom/rasterize.js http://handika.net/post.php /var/www/admin/data/www/handika.net/phantom/_build/
 
 #post
-phantomjs /var/www/admin/data/www/handika.net/phantom/rasterize.js https://vk.com/app3908186
+phantomjs /var/www/admin/data/www/handika.net/phantom/rasterize.js https://vk.com/app3912624
 
 

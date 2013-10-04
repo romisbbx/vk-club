@@ -40,7 +40,7 @@
 </head>
 <body>
 	<div class="content" id="js-content">
-
+		Post!
 	</div>
 </body>
 </html>
