@@ -82,5 +82,12 @@ window.WebApp.prototype = {
 		} else {
 			return false;
 		}
+	},
+
+	getDayOfWeek: function () {
+		var day = (new Date()).getDay(),
+			daysTitle = ['субботы', 'воскресения', 'понедельника', 'вторника', 'среды', 'четверга', 'пятницы'];
+
+		return daysTitle[day];
 	}
 };

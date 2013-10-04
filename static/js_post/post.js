@@ -27,7 +27,7 @@ Post.prototype = {
 	renderTopActive: function (callback) {
 		App.renderTemplate('post-top-active', {
 			users: this.data.users_last_day.reverse(),
-			day: this.getDayOfWeek()
+			day: App.getDayOfWeek()
 		}, App._bind(function (html) {
 			App.layouts.content
 				.empty()
@@ -163,16 +163,9 @@ Post.prototype = {
 		}
 	},
 
-	getDayOfWeek: function () {
-		var day = (new Date()).getDay(),
-			daysTitle = ['субботы', 'воскресения', 'понедельника', 'вторника', 'среды', 'четверга', 'пятницы'];
-
-		return daysTitle[day];
-	},
-
 	getMessage: function (everyday) {
 		var users = this.data.users_last_day.reverse(),
-			text = 'Поздравляем самых активных подписчиков ' + this.getDayOfWeek() + ':';
+			text = 'Поздравляем самых активных подписчиков ' + App.getDayOfWeek() + ':';
 
 		for (var i = 0; i < users.length; i++) {
 			if (i < users.length - 1) {

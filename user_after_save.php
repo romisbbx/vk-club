@@ -77,8 +77,6 @@ class App {
 			if ($city_resp['response']) {
 				$city_resp = $city_resp['response'];
 
-				$this->db->query('TRUNCATE TABLE ?n', $outputTableName);
-
 				for ($i = 0; $i < count($resp); $i++) {
 					for ($j = 0; $j < count($users); $j++) {
 						if ($resp[$i]['uid'] == $users[$j]['id']) {

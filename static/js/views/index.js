@@ -7,6 +7,7 @@ WebApp.Views.Index = Backbone.Marionette.View.extend({
 	templateUser: 'user',
 
 	initialize: function () {
+		this.curUser = App.appVars['viewer_id'];
 		this.render();
 	},
 
@@ -16,18 +17,20 @@ WebApp.Views.Index = Backbone.Marionette.View.extend({
 				.empty()
 				.append(this.$el.html(html));
 
-			this.getUsersId();
+			this.getData(App._bind(function () {
+				this.setUpdateTimer();
+
+				this.renderTopActive(this.data.users_last_day);
+				this.renderTop100(this.data.users);
+				this.renderUser(this.data.cur_user);
+			}, this));
 		}, this));
 	},
 
 	renderTopActive: function (data) {
-		data = this.sortUserData(data, 1);
-		data = data.slice(0, 5);
-		data = this.sortUserData(data, -1);
-
 		App.renderTemplate(this.templateTopActive, {
-			items: data,
-			day: this.getDayOfWeek()
+			items: data.reverse(),
+			day: App.getDayOfWeek()
 		}, App._bind(function (html) {
 			this.$el.find('#js-top-active')
 				.empty()
@@ -36,7 +39,6 @@ WebApp.Views.Index = Backbone.Marionette.View.extend({
 	},
 
 	renderTop100: function (data) {
-		data = data.slice(0, 100);
 		data = data.slice(15 * this.options.page, 15 * this.options.page + 15);
 
 		for (var i = 0; i < data.length; i++) {
@@ -62,12 +64,10 @@ WebApp.Views.Index = Backbone.Marionette.View.extend({
 		}, this));
 	},
 
-	renderUser: function (data) {
-		var user = this.getCurUser(data);
-
+	renderUser: function (user) {
 		App.renderTemplate(this.templateUser, {
 			user: user,
-			setting: this.setting
+			setting: this.data.setting
 		}, App._bind(function (html) {
 			this.$el.find('#js-user')
 				.empty()
@@ -91,144 +91,49 @@ WebApp.Views.Index = Backbone.Marionette.View.extend({
 		}, this));
 	},
 
-	getUsersId: function () {
+	getData: function (callback) {
 		$.ajax({
 			data: {
-				cur_user: App.appVars['user_id']
+				cur_user: this.curUser
 			},
 			dataType: 'json',
-			url: '/user.php',
+			url: '/user_data.php',
 			type: 'POST',
 			success: App._bind(function (response) {
-				this.users = response.users;
-				this.setting = response.setting;
-				this.cur_user_place = response.cur_user_place;
+				this.data = response;
 
-				$.ajax({
-					dataType: 'json',
-					url: '/user_last_day.php',
-					type: 'POST',
-					success: App._bind(function (response) {
-						this.usersLastDay = response.users;
-
-						if (this.usersLastDay.length < 5) {
-							var i = 0,
-								res;
-
-							while (this.usersLastDay.length < 5) {
-								res = _.filter(this.usersLastDay, App._bind(function (item) {
-									return this.users[i].id == item.id;
-								}, this));
-
-								if (!res.length) {
-									this.usersLastDay.push({
-										id: this.users[i].id,
-										rating: 0
-									});
-								}
-								i++;
-							}
-						}
-
-						this.getUsersData(this.users, false);
-						this.getUsersData(this.usersLastDay, true);
-						this.setUpdateTimer();
-					}, this)
-				});
+				if (this.data.cur_user) {
+					// если текущий пользователь не в топе, то у него нет данных
+					this.getUserData(this.curUser, callback);
+				}
 			}, this)
 		});
 	},
 
-	getUsersData: function (items, lastDay) {
-		var ids = _.pluck(items, 'id');
-
+	getUserData: function (id, callback) {
 		VK.api('users.get', {
-			user_ids: ids.join(', '),
+			user_ids: id,
 			fields: 'photo_100,photo_50,city'
 		}, App._bind(function (data) {
 			if (data && data.response) {
-				this.getCityName(data.response, lastDay, items);
+				data = data.response[0];
+				this.data.cur_user = _.extend(this.data.cur_user, data);
+
+				VK.api('database.getCitiesById', {
+					city_ids: data.city
+				}, App._bind(function (cityData) {
+					if (cityData && cityData.response) {
+						cityData = cityData.response[0];
+
+						this.data.cur_user.city = cityData.name;
+
+						if (callback && typeof(callback) === 'function') {
+							callback();
+						}
+					}
+				}, this));
 			}
 		}, this));
-	},
-
-	getCityName: function (data, lastDay, items) {
-		var ids = _.pluck(data, 'city');
-
-		VK.api('database.getCitiesById', {
-			city_ids: ids.join(', ')
-		}, App._bind(function (cityData) {
-			if (cityData && cityData.response) {
-				cityData = cityData.response;
-
-				data = this.mergeUserData(data, cityData, items);
-				data = this.sortUserData(data);
-
-				if (lastDay) {
-					this.renderTopActive(data);
-				} else {
-					this.renderTop100(data);
-					this.renderUser(data);
-				}
-			}
-		}, this));
-	},
-
-	mergeUserData: function (data, cityData, items) {
-		_.each(data, App._bind(function(item){
-			var userItem = _.find(items, function (value) {
-					return value.id == item.uid;
-				}),
-				cityItem = _.find(cityData, function (value) {
-					return value.cid == item.city;
-				});
-
-			item = _.extend(item, userItem, {
-				'city': cityItem && cityItem['name'] ? cityItem['name'] : ''
-			});
-
-			item.rating = parseFloat(item.rating);
-		}, this));
-
-		return data;
-	},
-
-	// сортировка по рейтингу имени
-	sortUserData: function (data, invert) {
-		invert = invert || 1;
-
-		return data.sort(function (a, b){
-			if (a.rating == b.rating) {
-				if (a.first_name < b.first_name) {
-					return -1 * invert;
-				}
-				if (a.first_name > b.first_name) {
-					return 1 * invert;
-				}
-				if (a.first_name == b.first_name) {
-					return 0;
-				}
-			} else {
-				return b.rating - a.rating * invert;
-			}
-		});
-	},
-
-	getCurUser: function (data) {
-		var user_id = parseInt(App.appVars['user_id'], 10) || parseInt(App.appVars['viewer_id'], 10),
-			place = -1,
-			user = _.find(data, function (item) {
-				place++;
-				return item.id == user_id;
-			}) || {};
-
-		if (user.no_top) {
-			user.place = this.cur_user_place;
-		} else {
-			user.place = place;
-		}
-
-		return user;
 	},
 
 	userCornerPosition: function (user) {
@@ -250,7 +155,7 @@ WebApp.Views.Index = Backbone.Marionette.View.extend({
 	},
 
 	updateTimer: function () {
-		var updateDate = this.setting['update_date'] * 1000,
+		var updateDate = this.data.setting['update_date'] * 1000,
 			nextUpdateDate = updateDate + 1000 * 60 * 60 * 24,
 			dif = nextUpdateDate - new Date(),
 			time = new Date() - updateDate,
@@ -267,12 +172,5 @@ WebApp.Views.Index = Backbone.Marionette.View.extend({
 		}
 
 		this.updateTimeEl.html(updateTime);
-	},
-
-	getDayOfWeek: function () {
-		var day = (new Date()).getDay(),
-			daysTitle = ['субботы', 'воскресения', 'понедельника', 'вторника', 'среды', 'четверга', 'пятницы'];
-
-		return daysTitle[day];
 	}
 });
