@@ -8,7 +8,6 @@ WebApp.Views.Index = Backbone.Marionette.View.extend({
 
 	initialize: function () {
 		this.curUser = App.appVars['viewer_id'];
-		this.curUser = 23251525;
 		this.render();
 	},
 
