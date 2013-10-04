@@ -8,6 +8,7 @@ WebApp.Views.Index = Backbone.Marionette.View.extend({
 
 	initialize: function () {
 		this.curUser = App.appVars['viewer_id'];
+		this.curUser = 23251525;
 		this.render();
 	},
 
@@ -125,7 +126,7 @@ WebApp.Views.Index = Backbone.Marionette.View.extend({
 					if (cityData && cityData.response) {
 						cityData = cityData.response[0];
 
-						this.data.cur_user.city = cityData.name;
+						this.data.cur_user.city = cityData && cityData['name'] ? cityData['name'] : '';
 
 						if (callback && typeof(callback) === 'function') {
 							callback();
