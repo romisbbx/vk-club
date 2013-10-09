@@ -11,7 +11,7 @@ $db = new SafeMySQL(array(
 	'charset' => 'utf8',
 ));
 
-$users = $db->getAll('SELECT * FROM user_data WHERE (id > 101 AND banned < 1) ORDER BY ?n DESC, ?n ASC LIMIT 54', 'rating', 'first_name');
+$users = $db->getAll('SELECT * FROM user_data WHERE (id > 101 AND banned < 1) ORDER BY ?n DESC, ?n ASC LIMIT 100', 'rating', 'first_name');
 $users_last_day = $db->getAll('SELECT * FROM user_data_last_day WHERE (id > 101 AND banned < 1) ORDER BY ?n DESC, ?n ASC LIMIT 5', 'rating', 'first_name');
 
 if (!empty($_POST['cur_user'])) {
