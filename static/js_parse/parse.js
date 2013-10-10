@@ -275,28 +275,6 @@ Parser.prototype = {
 		this.getStoryItem(this.data.user_photo_comments, 'cid', 'from_id', 'date', 'message', 'photo-cm');
 		this.getStoryItem(this.data.user_video_comments, 'id', 'from_id', 'date', 'message', 'video-cm');
 		this.getStoryItem(this.data.user_wall_comments, 'cid', 'from_id', 'date', 'text', 'wall-cm');
-
-		// лайки
-		_.each(this.data.user, App._bind(function (item, key) {
-			if (item.l) {
-				this.data.story.push({
-					item_id: 0,
-					user_id: key,
-					type: 'like',
-					date: 0,
-					text: parseInt(item.l, 10)
-				});
-			}
-			if (item.r) {
-				this.data.story.push({
-					item_id: 0,
-					user_id: key,
-					type: 'repost',
-					date: 0,
-					text: parseInt(item.r, 10)
-				});
-			}
-		}, this));
 	},
 
 	getStoryItem: function (items, propertyId, propertyUserId, propertyUserDate, propertyUserText, type) {

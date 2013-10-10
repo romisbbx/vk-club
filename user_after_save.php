@@ -18,6 +18,8 @@ class App {
 		));;
 
 		$this->vk = new vkapi(VK_API_ID, VK_SECRET_KEY);
+
+		$this->setting = $this->db->getRow('SELECT * FROM setting WHERE id = 1');
 	}
 
 	// расчет смещения в рейтинге для первых 100 чел
@@ -124,6 +126,46 @@ class App {
 		}
 	}
 
+	function user_last_day_get_likes () {
+		$data = $this->db->getAll('SELECT user.id, user.like-user_old.like like_diff FROM user, user_old WHERE (user.id=user_old.id AND user.like!=user_old.like)');
+
+		foreach ($data as $item) {
+			$ins['id'] = $item['id'];
+			$ins['like'] = $item['like_diff'];
+			$ins['rating'] = $item['like_diff'] * $this->setting['like'];
+
+			$this->db->query('INSERT INTO user_last_day SET ?u ON DUPLICATE KEY UPDATE ?n=?i, rating=rating+?s', $ins, 'like', $ins['like'], $ins['rating']);
+
+			// story
+			$story['item_id'] = 0;
+			$story['type'] = 'like';
+			$story['date'] = time();
+			$story['text'] = $item['like_diff'];
+
+			$this->db->query('INSERT INTO story SET ?u', $story);
+		}
+	}
+
+	function user_last_day_get_repost () {
+		$data = $this->db->getAll('SELECT user.id, user.repost-user_old.repost repost_diff FROM user, user_old WHERE (user.id=user_old.id AND user.repost!=user_old.repost)');
+
+		foreach ($data as $item) {
+			$ins['id'] = $item['id'];
+			$ins['repost'] = $item['repost_diff'];
+			$ins['rating'] = $item['repost_diff'] * $this->setting['repost'];
+
+			$this->db->query('INSERT INTO user_last_day SET ?u ON DUPLICATE KEY UPDATE ?n=?i, rating=rating+?s', $ins, 'repost', $ins['repost'], $ins['rating']);
+
+			// story
+			$story['item_id'] = 0;
+			$story['type'] = 'repost';
+			$story['date'] = time();
+			$story['text'] = $item['repost_diff'];
+
+			$this->db->query('INSERT INTO story SET ?u', $story);
+		}
+	}
+
 	function time() {
 		$this->db->query('UPDATE setting SET ?u WHERE id = 1', array(
 			'update_date' => time(),
@@ -139,6 +181,9 @@ $app->get_shift();
 
 $app->db->query('TRUNCATE TABLE user_data');
 $app->get_user_data('user', 'user_data');
+
+$app->user_last_day_get_likes();
+$app->user_last_day_get_repost();
 
 $app->db->query('TRUNCATE TABLE user_data_last_day');
 $app->get_user_data('user_last_day', 'user_data_last_day');
