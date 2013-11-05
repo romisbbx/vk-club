@@ -1,0 +1,32 @@
+1. Установка phantomjs
+
+cd /usr/local/share
+wget https://phantomjs.googlecode.com/files/phantomjs-1.9.2-linux-i686.tar.bz2
+tar xjf phantomjs-1.9.2-linux-i686.tar.bz2
+sudo ln -s /usr/local/share/phantomjs-1.9.2-linux-i686/bin/phantomjs /usr/local/share/phantomjs
+sudo ln -s /usr/local/share/phantomjs-1.9.2-linux-i686/bin/phantomjs /usr/local/bin/phantomjs
+sudo ln -s /usr/local/share/phantomjs-1.9.2-linux-i686/bin/phantomjs /usr/bin/phantomjs
+
+2. Команды local
+
+# parse
+phantomjs ~/apps/vk-club.local/www/rating_app/phantom/rasterize.js https://vk.com/app3893886
+
+#create screen
+phantomjs ~/apps/vk-club.local/www/rating_app/phantom/rasterize.js http://vk-club.local/rating_app/post.php ~/apps/vk-club.local/www/rating_app/phantom/_build/
+
+#post
+phantomjs ~/apps/vk-club.local/www/rating_app/phantom/rasterize.js https://vk.com/app3908186
+
+3. Команды рабочий сервер
+
+# parse
+phantomjs /var/www/admin/data/www/handika.net/rating_app/phantom/rasterize.js https://vk.com/app3912614
+
+#create screen
+phantomjs /var/www/admin/data/www/handika.net/rating_app/phantom/rasterize.js http://handika.net/rating_app/post.php /var/www/admin/data/www/handika.net/rating_app/phantom/_build/
+
+#post
+phantomjs /var/www/admin/data/www/handika.net/rating_app/phantom/rasterize.js https://vk.com/app3912624
+
+

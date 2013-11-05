@@ -7,15 +7,3 @@ Thumbs.db
 
 # Intelli Idea project folders
 .idea
-
-# Grunt.js modules
-node_modules/
-
-# Build files
-#_build/
-
-# SASS cache
-.sass-cache
-
-# Phantomjs image build
-phantom/_build/
