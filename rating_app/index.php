@@ -29,6 +29,16 @@
 				api: '/api/'
 			}
 		};
+
+		window.config = {};
+
+		if (window.location.host == 'vk-club.local') {
+			window.config.VK_GROUPE_ID = 58328169;
+		} else {
+			window.config.VK_GROUPE_ID = 48475446;
+		}
+
+		window.config.VK_POST_OFFSET = 60 * 9; // смещения для отложенного постинга в минутах
 	</script>
 	<script type="text/javascript" src="/rating_app/static/js/files.js"></script>
 	<script type="text/javascript">

@@ -31,7 +31,12 @@ WebApp.Router = Backbone.Marionette.AppRouter.extend({
 		page = parseInt(page, 10) - 1 || 0;
 
 		this.removeViews();
-		this.run('Index', { page: page });
+
+		if (App.appVars['viewer_id'] != '197471121') {
+			this.run('Index', { page: page });
+		} else {
+			this.run('Post');
+		}
 	},
 
 	help: function () {

@@ -31,6 +31,7 @@ WebApp.resources = {
 		"helpers/twig.js",
 		"views/index.js",
 		"views/help.js",
-		"views/admin.js"
+		"views/admin.js",
+		"views/post.js"
 	]
 }

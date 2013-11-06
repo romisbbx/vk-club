@@ -16,7 +16,7 @@ phantomjs ~/apps/vk-club.local/www/rating_app/phantom/rasterize.js https://vk.co
 phantomjs ~/apps/vk-club.local/www/rating_app/phantom/rasterize.js http://vk-club.local/rating_app/post.php ~/apps/vk-club.local/www/rating_app/phantom/_build/
 
 #post
-phantomjs ~/apps/vk-club.local/www/rating_app/phantom/rasterize.js https://vk.com/app3908186
+phantomjs ~/apps/vk-club.local/www/rating_app/phantom/rasterize.js https://vk.com/app3863095
 
 3. Команды рабочий сервер
 
@@ -27,6 +27,6 @@ phantomjs /var/www/admin/data/www/handika.net/rating_app/phantom/rasterize.js ht
 phantomjs /var/www/admin/data/www/handika.net/rating_app/phantom/rasterize.js http://handika.net/rating_app/post.php /var/www/admin/data/www/handika.net/rating_app/phantom/_build/
 
 #post
-phantomjs /var/www/admin/data/www/handika.net/rating_app/phantom/rasterize.js https://vk.com/app3912624
+phantomjs /var/www/admin/data/www/handika.net/rating_app/phantom/rasterize.js https://vk.com/app3880825
 
 
