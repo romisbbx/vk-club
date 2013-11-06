@@ -27,6 +27,6 @@ phantomjs /var/www/admin/data/www/handika.net/rating_app/phantom/rasterize.js ht
 phantomjs /var/www/admin/data/www/handika.net/rating_app/phantom/rasterize.js http://handika.net/rating_app/post.php /var/www/admin/data/www/handika.net/rating_app/phantom/_build/
 
 #post
-phantomjs /var/www/admin/data/www/handika.net/rating_app/phantom/rasterize.js https://vk.com/app3880825
+phantomjs --ignore-ssl-errors=yes /var/www/admin/data/www/handika.net/rating_app/phantom/rasterize.js https://vk.com/app3880825
 
 
