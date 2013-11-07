@@ -13,6 +13,8 @@ CONST WIDTH = 1010;
 CONST HEIGHT = 600;
 CONST FONT = 'Arial';
 
+$input = json_decode(file_get_contents("php://input"));
+
 function squarize($src, $size) {
   $w = max($size[0], $size[1]);
   $res = imagecreatetruecolor($w, $w);
@@ -22,7 +24,7 @@ function squarize($src, $size) {
   return $res;
 }
 
-foreach ($_GET['images'] as $i => $image) {
+foreach ($input->images as $i => $image) {
   $file = explode('.', $image);
   $file = array_reverse($file);
   file_put_contents("./temp/$i.".$file[0], file_get_contents($image));
@@ -170,14 +172,14 @@ foreach ($map as $i => $position) {
   imagecopyresampled($result, $image, $position['x'], $position['y'], 0, 0, $position['width'], $position['height'], max($size[0], $size[1]), max($size[0], $size[1]));
 }
 
-file_put_contents("./temp/avatar.jpg", file_get_contents($_GET['avatar']));
+file_put_contents("./temp/avatar.jpg", file_get_contents($input->avatar));
 $avatar = imagecreatefromjpeg('./temp/avatar.jpg');
 imagecopyresampled($result, $avatar, 466, 22, 0, 0, 81, 81, 200, 200);
 imagejpeg($result, './results/result.jpg', 100);
 
 $data['file1'] = '@'.realpath('./results/result.jpg');
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $_GET['upload_url']);
+curl_setopt($ch, CURLOPT_URL, $input->upload_url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
 curl_setopt($ch, CURLOPT_POST, 1);

@@ -22,8 +22,8 @@ angular.module("vk").controller('HandikaCtrl', ['$scope', 'vkontakte', '$http', 
   var album_url = '';
 
   var saveData = function(data){
-    $http.post('/data.php', data).success(function(response){
-      console.log(response);
+    $http.post('./data.php', data).success(function(response){
+      $scope.statistics = data;
     });
   };
 
@@ -41,13 +41,13 @@ angular.module("vk").controller('HandikaCtrl', ['$scope', 'vkontakte', '$http', 
   $scope.next = function(){
     $scope.requestStarted = true;
     service.uploadPhoto(service.AID, function(url){
-      var params = [];
+      var params = {images: []};
       for (var i in selected) {
-        params.push('images[]='+selected[i]);
+        params.images.push(selected[i]);
       }
-      params.push('avatar='+$scope.current_user.photo_big);
-      params.push('upload_url='+encodeURIComponent(url));
-      $http.get('./glue.php?'+params.join('&')).success(function(data){
+      params.avatar = $scope.current_user.photo_big;
+      params.upload_url = url;
+      $http.post('./glue.php', params).success(function(data){
         service.savePhotos(data, function(data){
           cover = data.response[data.response.length-1];
           album_url = 'http://vk.com/album'+cover.owner_id+'_'+cover.aid;

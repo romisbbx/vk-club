@@ -10,8 +10,5 @@ if ($request) {
   }
   $data[] = $request;
   file_put_contents(FILENAME, json_encode($data));
-  echo json_encode(array('result' => 'ok'));
 }
-else {
-  echo file_get_contents(FILENAME);
-}
+echo file_get_contents(FILENAME);
