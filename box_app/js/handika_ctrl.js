@@ -23,7 +23,7 @@ angular.module("vk").controller('HandikaCtrl', ['$scope', 'vkontakte', '$http', 
 
   var saveData = function(data){
     $http.post('./data.php', data).success(function(response){
-      $scope.statistics = data;
+      $scope.statistics = response;
     });
   };
 
