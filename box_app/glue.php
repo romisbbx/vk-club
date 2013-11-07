@@ -1,6 +1,6 @@
 <?php
-//http://app.handika.ru.preview.ihc.ru/
-//http://app.handika.ru.preview.ihc.ru/
+putenv('GDFONTPATH=' . realpath('.'));
+
 const MARGIN = 10;
 const Y = 175;
 
