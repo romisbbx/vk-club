@@ -131,7 +131,7 @@ angular.module("vk").controller('HandikaCtrl', ['$scope', 'vkontakte', '$http', 
 
   setStep(1);
 
-  $http.get('/data.php', {}).success(function(data){
+  $http.get('./data.php', {}).success(function(data){
     $scope.statistics = data;
     $scope.statPages = Math.ceil(data.length / $scope.perPage);
   });
