@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL|E_STRICT);
+ini_set('display_errors', 'on');
+
 const FILENAME = './data/results.dat';
 $request = file_get_contents("php://input");
 if ($request) {
