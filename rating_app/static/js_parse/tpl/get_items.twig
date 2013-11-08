@@ -36,9 +36,15 @@ while (i < items.length && requestCount < {{ config.API_REQUEST_COUNT }}) {
 				responseLength = response.{{ responseName }}.length - 1;
 			{% endif %}
 		{% else %}
-			count = response.count;
-			data = data + response.{{ responseName }};
-			responseLength = response.{{ responseName }}.length;
+			if (response.count + "" == "") { {# если выдается простой ответ (1 / 0) #}
+				count = 1;
+				data = data + [response];
+				responseLength = 1;
+			} else {
+				count = response.count;
+				data = data + response.{{ responseName }};
+				responseLength = response.{{ responseName }}.length;
+			}
 		{% endif %}
 
 		log = log + " " + count;

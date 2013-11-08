@@ -104,7 +104,7 @@ window.Parser = function () {
 		this.getBoardComments(App._bind(this.stackNext, this));
 	}, this));
 
-	// Собираем уникальных пользователей и историю и сохраняем в базу
+	// Собираем уникальных пользователей и историю
 
 	this.stack.push(App._bind(function () {
 		this.getUserData();
@@ -114,7 +114,13 @@ window.Parser = function () {
 		this.stackNext();
 	}, this));
 
+	// фильтруем пользователей не состоящих в группе
 	this.stack.push(App._bind(function () {
+		this.filterFriendsOnly(App._bind(this.stackNext, this));
+	}, this));
+
+	this.stack.push(App._bind(function () {
+		console.log(this.data, _.keys(this.data.user).length);
 		this.userCopyTable(App._bind(this.stackNext, this));
 	}, this));
 
@@ -316,6 +322,27 @@ Parser.prototype = {
 			_.filter(items, function (item) {
 				return item.type == 'photo';
 			}), 'p', 'user_id');
+	},
+
+	filterFriendsOnly: function (callback) {
+		this.data.usersArray = _.keys(this.data.user);
+
+		this.getItems('usersFriendsOnly', this.data.usersArray, 'user_id', 'groups.isMember', {
+			group_id: Math.abs(window.config.VK_GROUPE_ID)
+		}, 'response', false, App._bind(function () {
+			console.log('user_count: ', _.size(this.data.user));
+
+			for (var i = 0; i < this.data.usersArray.length; i++) {
+				if (this.data.usersFriendsOnly[i] < 1) {
+					delete this.data.user[this.data.usersArray[i]];
+				}
+			}
+			console.log('FriendsOnly: ', _.size(this.data.user));
+
+			if (callback && typeof(callback) === 'function') {
+				callback();
+			}
+		}, this), 0);
 	},
 
 	// --------------------------------------------------------------
