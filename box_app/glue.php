@@ -41,8 +41,13 @@ imagefill($result, 0, 0, imagecolorallocate($result, 255, 255, 255));
 $header_color = imagecolorallocate($result, 247, 151, 29);
 $text_color = imagecolorallocate($result, 70, 51, 130);
 
+$choose_word = 'выбрал';
+if ($input->sex == 1) {
+  $choose_word .= 'а';
+}
 
-imagettftext($result, 24, 0, 186, 148, $header_color, FONT, 'Я выбрал эти призы в конкурсе Handika Box:');
+
+imagettftext($result, 24, 0, 186, 148, $header_color, FONT, "Я $choose_word эти призы в конкурсе Handika Box:");
 imagettftext($result, 15, 0, 223, 541, $text_color, FONT, 'С твоей помощью я смогу выиграть эти призы — жми «Мне нравится»!');
 imagettftext($result, 15, 0, 324, 571, $text_color, FONT, 'Или тоже прими участие на vk.com/handika.');
 

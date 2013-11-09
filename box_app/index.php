@@ -7,12 +7,13 @@
 </head>
 <body ng-app="vk">
   <div id="wrapper" ng-controller="HandikaCtrl" ng-show="user_loaded" ng-load="load()" ng-cloak>
+    <div class="b-shadow" ng-show="showStatistics || secondTime || showRules"></div>
     <div id="step1" ng-show="step == 1" class="b-step b-step_first">
       <h1>Handika Box</h1>
       <p class="b-description">
         Комплимент подписчикам Хандики к&nbsp;Новому Году&nbsp;&mdash; шанс выиграть коробку<br />наполненную вашими пожеланиями. Каждый день мы&nbsp;принимаем от&nbsp;вас заявки,<br />а в&nbsp;день окончания конкурса мы&nbsp;определим счастливчика, которому мы&nbsp;вышлем<br />заботливо упакованную коробку с&nbsp;выбранными авторскими товарами.&nbsp;Приступим?
       </p>
-      <button class="b-button b-button_big" ng-click="start()">Собрать свою коробку</button>
+      <button class="b-button b-button_big" ng-click="createBox()">Собрать свою коробку</button>
     </div>
     <div id="step2" ng-show="step==2" class="b-step b-step_second">
       <h1 class="h1_big">Собери свою коробку</h1>
@@ -56,7 +57,7 @@
     </div>
     <div id="step3" ng-show="step==3" class="b-step b-step_third">
       <h1 class="h1_big">Отличный выбор!</h1>
-      <a href="" class="backlink" ng-click="start();">Собрать коробку</a>
+      <a href="" class="backlink" ng-click="start()">Собрать коробку</a>
       <div class="b-fuck-yeah">
         Превратите свои желания в реальность и получите настоящую коробку<br />с выбранными призами. Для этого: подпишитесь на сообщество Handika,<br />опубликуйте картинку со своими пожеланиями себе на стену и набирайте как<br />можно больше отметок «Мне нравится». Продолжим?
       </div>

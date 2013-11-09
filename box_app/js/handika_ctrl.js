@@ -1,4 +1,4 @@
-angular.module("vk").controller('HandikaCtrl', ['$scope', 'vkontakte', '$http', '$q', function($scope, vkontakte, $http, $q){
+angular.module("vk").controller('HandikaCtrl', ['$scope', 'vkontakte', '$http', function($scope, vkontakte, $http){
   $scope.photos = [];
   $scope.maxBalls = 1000;
   $scope.allBalls = $scope.maxBalls;
@@ -31,12 +31,22 @@ angular.module("vk").controller('HandikaCtrl', ['$scope', 'vkontakte', '$http', 
     $scope.step = step;
     var el = document.getElementById('step'+step);
     el.style.display = 'block';
-    service.resizeWindow(service.WIDTH, el.clientHeight + 100);
+    var height = Math.max(el.clientHeight + 100, 900);
+    service.resizeWindow(service.WIDTH, height);
   };
 
   $scope.start = function(){
     setStep(2);
   };
+
+  $scope.createBox = function(){
+    if ($scope.isMember) {
+      $scope.secondTime = true;
+    }
+    else {
+      $scope.start();
+    }
+  }
 
   $scope.next = function(){
     $scope.requestStarted = true;
@@ -47,6 +57,7 @@ angular.module("vk").controller('HandikaCtrl', ['$scope', 'vkontakte', '$http', 
       }
       params.avatar = $scope.current_user.photo_big;
       params.upload_url = url;
+      params.sex = $scope.current_user.sex;
       $http.post('./glue.php', params).success(function(data){
         service.savePhotos(data, function(data){
           cover = data.response[data.response.length-1];
@@ -144,10 +155,10 @@ angular.module("vk").controller('HandikaCtrl', ['$scope', 'vkontakte', '$http', 
       $scope.$digest();
     });
     $scope.isAdmin = service.isAdmin();
-    $scope.secondTime = false;
     for (var i = 0, max = $scope.statistics.length; i < max; i++) {
       if ($scope.statistics[i].user_id == $scope.current_user.uid) {
-        $scope.secondTime = true;
+        $scope.showStatistics = true;
+        $scope.isMember = true;
         break;
       }
     }
@@ -178,18 +189,6 @@ angular.module("vk").controller('HandikaCtrl', ['$scope', 'vkontakte', '$http', 
           $scope.$digest();
         });
       }(data.response[i]));
-    }
-  });
-
-  var savedHeight = 0;
-
-  $scope.$watch('showStatistics', function(value){
-    if (value) {
-      savedHeight = $("body").outerHeight();
-      service.resizeWindow(service.WIDTH, 930);
-    }
-    else if (savedHeight) {
-      service.resizeWindow(service.WIDTH, savedHeight - 3);
     }
   });
 }]);
