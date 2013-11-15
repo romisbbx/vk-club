@@ -17,16 +17,28 @@ class App {
 
 		$this->setting = $this->db->getRow('SELECT * FROM setting WHERE id = 1');
 		$this->ban = $this->db->getCol('SELECT id FROM ban');
+		$this->ban_last_day = $this->db->getCol('SELECT id FROM ban_last_day');
 	}
 
 	function add_to_base() {
 		foreach ($_POST as $key => $value) {
 			$baned = false;
 
+			// глобальный бан
 			foreach ($this->ban as $ban_item) {
 				if ($ban_item == $key) {
 					$baned = true;
 					break;
+				}
+			}
+
+			// бан в однодневном рейтинге
+			if (!$baned) {
+				foreach ($this->ban_last_day as $ban_item) {
+					if ($ban_item == $key) {
+						$baned = true;
+						break;
+					}
 				}
 			}
 
