@@ -361,7 +361,7 @@ WebApp.App = Backbone.Marionette.Application.extend({
 
 	getDayOfWeek: function () {
 		var day = (new Date()).getDay(),
-			daysTitle = ['субботы', 'воскресения', 'понедельника', 'вторника', 'среды', 'четверга', 'пятницы'];
+			daysTitle = ['в субботу', 'в воскресение', 'в понедельник', 'во вторник', 'в среду', 'в четверг', 'в пятницу'];
 
 		return daysTitle[day];
 	}

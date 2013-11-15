@@ -8,7 +8,7 @@ if (system.args.length < 2) {
 } else {
 	address = system.args[1];
 	savePath = system.args[2];
-	page.viewportSize = { width: 800, height: 450 };
+	page.viewportSize = { width: 800, height: 410 };
 
 	page.open(address, function (status) {
 		if (status !== 'success') {
@@ -42,7 +42,7 @@ if (system.args.length < 2) {
 
 		if (msg == 'top-active') {
 			page.render(savePath + 'top-active.png');
-			page.viewportSize = { width: 760, height: 550 };
+			page.viewportSize = { width: 760, height: 503 };
 		}
 
 		if (msg == 'top-100-1') {
