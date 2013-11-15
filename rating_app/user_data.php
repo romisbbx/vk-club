@@ -14,6 +14,10 @@ $db = new SafeMySQL(array(
 $users = $db->getAll('SELECT * FROM user_data WHERE (id > 101 AND banned < 1) ORDER BY ?n DESC, ?n ASC LIMIT 100', 'rating', 'first_name');
 $users_last_day = $db->getAll('SELECT * FROM user_data_last_day WHERE (id > 101 AND banned < 1) ORDER BY ?n DESC, ?n ASC LIMIT 5', 'rating', 'first_name');
 
+if ($_POST['messages']) {
+	$messages = $db->getAll('SELECT * FROM post_messages');
+}
+
 if (!empty($_POST['cur_user'])) {
 	$cur_user_id = $_POST['cur_user'];
 	$cur_user_in_top_100 = false;
@@ -58,6 +62,10 @@ $data = array(
 	'setting' => $db->getRow('SELECT * FROM setting WHERE id = 1'),
 	'cur_user' => $cur_user
 );
+
+if (!empty($messages)) {
+	$data['messages'] = $messages;
+}
 
 echo json_encode($data);
 
