@@ -27,7 +27,8 @@
 				css: '/rating_app/static/_build/css/',
 				img: '/rating_app/static/img/',
 				api: '/api/'
-			}
+			},
+			bootstrap: <?php include 'user_data.php'; ?>
 		};
 
 		window.config = {};
