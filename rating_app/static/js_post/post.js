@@ -30,7 +30,7 @@ Post.prototype = {
 				if (callback && typeof(callback) === 'function') {
 					callback();
 				}
-			}, 1000);
+			}, 5000);
 		}, this));
 	},
 
@@ -53,7 +53,7 @@ Post.prototype = {
 				if (callback && typeof(callback) === 'function') {
 					callback();
 				}
-			}, 1000);
+			}, 5000);
 		}, this));
 	},
 
