@@ -36,7 +36,7 @@ WebApp.Views.Index = Backbone.Marionette.View.extend({
 
 	renderTopActive: function (data) {
 		App.renderTemplate(this.templateTopActive, {
-			items: data.reverse(),
+			items: data.slice().reverse(),
 			day: App.getDayOfWeek(true)
 		}, App._bind(function (html) {
 			this.$el.find('#js-top-active')

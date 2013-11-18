@@ -109,7 +109,7 @@ WebApp.Views.Post = Backbone.Marionette.View.extend({
 	},
 
 	getMessage: function (everyday) {
-		var users = this.data.users_last_day.reverse(),
+		var users = this.data.users_last_day.slice().reverse(),
 			data = {
 				day: App.getDayOfWeek()
 			},
