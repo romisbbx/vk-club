@@ -17,6 +17,8 @@ WebApp.Views.Index = Backbone.Marionette.View.extend({
 				.empty()
 				.append(this.$el.html(html));
 
+			this.renderTopActive([]);
+
 			this.getData(App._bind(function () {
 				this.setUpdateTimer();
 

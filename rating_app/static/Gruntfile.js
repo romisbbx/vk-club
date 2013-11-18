@@ -1,5 +1,5 @@
 module.exports = function(grunt) {
-	grunt.initConfig({
+	var gruntConfig = {
 		app: {
 			stylesheets: {
 				src: 'sass',
@@ -16,7 +16,7 @@ module.exports = function(grunt) {
 			},
 			scripts: {
 				src: 'js',
-				compiled: '_build/js'
+				compiled: '_build/js/'
 			},
 			templates: {
 				src: 'tpl',
@@ -25,26 +25,13 @@ module.exports = function(grunt) {
 		},
 
 		// Задачи
-		copy: {
-			images: {
-				files: [
-					{
-						expand: true,
-						cwd: "<%= app.images.src %>/",
-						src: ["**"],
-						dest: "<%= app.images.compiled %>/"
-					}
-				]
-			}
-		},
-
 		uglify: {
 			options: {
 				banner: '/*<%= grunt.template.today("yyyy-mm-dd") %> */\n'
 			},
 			build: {
-				src: '<%= app.scripts.src %>/*.js',
-				dest: '<%= app.scripts.compiled %>/scripts.min.js'
+				src: '<%= app.scripts.compiled %>app.js',
+				dest: '<%= app.scripts.compiled %>app.min.js'
 			}
 		},
 
@@ -113,12 +100,46 @@ module.exports = function(grunt) {
 				files: '<%= app.stylesheets.src %>/**/*.sass',
 				tasks: 'compass:watch'
 			}
-//			copy_images: {
-//				files: '<%= app.images.src %>/*',
-//				tasks: 'copy:images'
-//			}
 		}
-	});
+	};
+
+	// Загружаем js config
+
+	var path = 'js/',
+		fs = require('fs'),
+		configString = fs.readFileSync(path + 'files.js', 'utf-8'),
+		jsConfig = JSON.parse(configString.substr(configString.indexOf('{'))),
+		libsFileList = [],
+		appFileList = [];
+
+	if (jsConfig.libs) {
+		jsConfig.libs.forEach(function(file) {
+			if (file.indexOf('._') !== 0) {
+				libsFileList.push(path + file);
+			}
+		});
+	}
+
+	if (jsConfig.app) {
+		jsConfig.app.forEach(function(file) {
+			if (file.indexOf('._') !== 0) {
+				appFileList.push(path + file);
+			}
+		});
+	}
+
+	gruntConfig.concat = {
+		libs: {
+			src: libsFileList,
+			dest: '_build/js/libs.min.js'
+		},
+		app: {
+			src: appFileList,
+			dest: '_build/js/app.min.js'
+		}
+	};
+
+	grunt.initConfig(gruntConfig);
 
 	grunt.loadNpmTasks('grunt-contrib-compass');
 	grunt.loadNpmTasks("grunt-contrib-clean");
@@ -126,9 +147,10 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-grunticon');
+	grunt.loadNpmTasks('grunt-contrib-concat');
 
 	// Кастомные задачи
-	grunt.registerTask('build', ['clean', /*'copy', */'grunticon:svg', 'compass:dev' ]);
-	grunt.registerTask('deploy', ['clean', /*'copy', */'grunticon:svg', 'compass:deploy', 'uglify' ]);
+	grunt.registerTask('build', ['clean', 'grunticon:svg', 'concat:libs','concat:app', 'compass:dev']);
+	grunt.registerTask('deploy', ['clean', 'grunticon:svg', 'concat:libs','concat:app', 'compass:deploy']);
 	grunt.registerTask('default', ['build', 'watch']);
 };

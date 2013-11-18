@@ -19,7 +19,7 @@
 	<script type="text/javascript" src="/rating_app/static/js/app.loader.js"></script>
 	<script type="text/javascript">
 		WebApp.config = {
-			debugMode: true,
+			debugMode: false,
 			debugEvent: false,
 			locations: {
 				js: '/rating_app/static/js/',
@@ -34,6 +34,7 @@
 
 		if (window.location.host == 'vk-club.local') {
 			window.config.VK_GROUPE_ID = 58328169;
+			WebApp.config.debugMode = true;
 		} else {
 			window.config.VK_GROUPE_ID = 48475446;
 		}
