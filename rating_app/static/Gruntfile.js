@@ -98,7 +98,12 @@ module.exports = function(grunt) {
 		watch: {
 			scss: {
 				files: '<%= app.stylesheets.src %>/**/*.sass',
-				tasks: 'compass:watch'
+				tasks: 'compass:watch',
+				options: {
+					livereload: {
+						port: 35729
+					}
+				}
 			}
 		}
 	};

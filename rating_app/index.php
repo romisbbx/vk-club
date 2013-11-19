@@ -48,7 +48,7 @@
 			new WebApp.Loader();
 		});
 	</script>
-	<!-- TODO: добавить подключение скриптов для production версии -->
+	<script src="//localhost:35729/livereload.js"></script>
 </head>
 <body>
 <!--	<a class="header icon-logo" id="js-header" href="/"></a>-->
