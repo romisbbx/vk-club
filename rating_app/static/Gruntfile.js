@@ -150,7 +150,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-concat');
 
 	// Кастомные задачи
-	grunt.registerTask('build', ['clean', 'grunticon:svg', 'concat:libs','concat:app', 'compass:dev']);
-	grunt.registerTask('deploy', ['clean', 'grunticon:svg', 'concat:libs','concat:app', 'compass:deploy']);
+	grunt.registerTask('build', ['clean', 'concat:libs','concat:app', 'compass:dev', 'grunticon:svg']);
+	grunt.registerTask('deploy', ['clean', 'concat:libs','concat:app', 'compass:deploy', 'grunticon:svg']);
 	grunt.registerTask('default', ['build', 'watch']);
 };
