@@ -36,7 +36,9 @@ $count = count($files);
 
 $map = array();
 $result = imagecreatetruecolor(WIDTH, HEIGHT);
-imagefill($result, 0, 0, imagecolorallocate($result, 255, 255, 255));
+
+$image = imagecreatefromjpeg('./images/image-bg.jpg');
+imagecopyresampled($result, $image, 0, 0, 0, 0, WIDTH, HEIGHT, WIDTH, HEIGHT);
 
 $header_color = imagecolorallocate($result, 247, 151, 29);
 $text_color = imagecolorallocate($result, 70, 51, 130);
@@ -47,7 +49,7 @@ if ($input->sex == 1) {
 }
 
 
-imagettftext($result, 24, 0, 186, 148, $header_color, FONT, "Я $choose_word эти призы в конкурсе Handika Box:");
+imagettftext($result, 24, 0, 226, 148, $header_color, FONT, "Я $choose_word эти призы в конкурсе Handika Box:");
 imagettftext($result, 15, 0, 223, 541, $text_color, FONT, 'С твоей помощью я смогу выиграть эти призы — жми «Мне нравится»!');
 imagettftext($result, 15, 0, 324, 571, $text_color, FONT, 'Или тоже прими участие на vk.com/handika.');
 

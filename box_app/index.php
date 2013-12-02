@@ -5,15 +5,15 @@
   <script type="text/javascript" src="//vk.com/js/api/openapi.js?96"></script>
   <meta charset="utf-8">
 </head>
-<body ng-app="vk">
-  <div id="wrapper" ng-controller="HandikaCtrl" ng-show="user_loaded" ng-load="load()" ng-cloak>
+<body ng-app="vk" ng-controller="HandikaCtrl" ng-class="{'b-body_step1': step == 1}">
+  <div id="wrapper"  ng-show="user_loaded" ng-load="load()" ng-cloak>
     <div class="b-shadow" ng-show="showStatistics || secondTime || showRules"></div>
     <div id="step1" ng-show="step == 1" class="b-step b-step_first">
-      <h1>Handika Box</h1>
-      <p class="b-description">
+      <h1 class="b-title_first">Handika Box</h1>
+      <p class="b-description b-description_first">
         Комплимент подписчикам Хандики к&nbsp;Новому Году&nbsp;&mdash; шанс выиграть коробку<br />наполненную вашими пожеланиями. Каждый день мы&nbsp;принимаем от&nbsp;вас заявки,<br />а в&nbsp;день окончания конкурса мы&nbsp;определим счастливчика, которому мы&nbsp;вышлем<br />заботливо упакованную коробку с&nbsp;выбранными авторскими товарами.&nbsp;Приступим?
       </p>
-      <button class="b-button b-button_big" ng-click="createBox()">Собрать свою коробку</button>
+      <button class="b-button b-button_big b-button_first" ng-click="createBox()">Собрать свою коробку</button>
     </div>
     <div id="step2" ng-show="step==2" class="b-step b-step_second">
       <h1 class="h1_big">Собери свою коробку</h1>
@@ -81,11 +81,6 @@
       <h1 class="h1_big">Финиш</h1>
       <p class="b-fuck-yeah">Теперь мы опубликуем картинку с набором ваших товаров в альбоме конкурса, а<br />вам останется только рассказать о своей коробке друзьям. Победа тем ближе,<br />чем большему числу людей понравится ваш набор. Не абывайте, что конкурс только<br /> для подписчиков паблика <a href="http://vk.com/handika">Handika</a>.</p>
       <button class="b-button b-button_big" ng-click="start(); showStatistics = true;">Смотреть участников</button>
-      <div class="finish-steps">
-        <div class="finish-step">Убедитесь, что подписанына Хандику</div>
-        <div class="finish-step">Разместите пост с коробкойу себя на стене</div>
-        <div class="finish-step">Двигайтесь к успеху, собирая отметки «Мне нравится»</div>
-      </div>
     </div>
     <div ng-show="showRules" class="b-popup b-popup_rules">
       <span role="link" ng-click="showRules = false" class="close">&times;</span>
@@ -111,35 +106,61 @@
       </div>
       <button class="b-button b-button_big" ng-click="secondTime = false; start()">Собрать еще одну коробку</button>
     </div>
-    <div ng-show="showStatistics" class="b-popup b-popup_statistics">
+    <div ng-show="showStatistics" class="b-popup b-popup_statistics" id="statPopup">
       <span role="link" ng-click="showStatistics = false" class="close">&times;</span>
       <h1 class="h1_stat">Участники</h1>
-      <table cellspacing="0" cellpadding="0" class="stats" ng-hide="isAdmin" hand-scrollable="200"  hand-scrollable-var="showStatistics">
+      <div class="b-tooltip" ng-show="row" ng-style="{left: tooltipLeft, top: tooltipTop}">
+        <div class="b-likes-line">
+          Лайки друзей:
+          <span class="b-likes-count">{{row.friends_likes}}</span>
+          <span class="b-likes-mult">&times;</span>
+          <span class="b-likes-digit">5</span>
+          <span class="b-likes-eq">=</span>
+          <span class="b-likes-points">{{row.friends_likes * 5}}</span>
+        </div>
+        <div class="b-likes-line">
+          Лайки:
+          <span class="b-likes-count">{{row.likes * 5}}</span>
+          <span class="b-likes-mult">&times;</span>
+          <span class="b-likes-digit b-likes-digit_float">0,1</span>
+          <span class="b-likes-eq">=</span>
+          <span class="b-likes-points">{{row.likes * 0.1}}</span>
+        </div>
+      </div>
+      <table cellspacing="0" cellpadding="0" class="stats"
+             ng-hide="isAdmin" hand-scrollable="200"  hand-scrollable-var="showStatistics"
+             ng-mousemove="setCursor($event)">
         <tr ng-repeat="stat in statistics | filter: {user_id: current_user.uid}"
             ng-class="{'stat-row_my': $index == 0, 'stat-row_small': $index != 0, 'stat-row_not-exists': !stat.exists}"
+            ng-mouseover="$parent.row = stat"
+            ng-mouseout="$parent.row = false"
             >
             <td class="stat-number">{{statistics.indexOf(stat) + 1}}</td>
             <td class="stat-photo"><img ng-src="{{stat.user_photo}}"></td>
             <td class="stat-name"><a href="http://vk.com/id{{stat.user_id}}" target="_blank">{{stat.user_first_name}} {{stat.user_last_name}}</a></td>
             <td class="stat-post"><a href="http://vk.com/id{{stat.user_id}}?w=wall{{stat.user_id}}_{{stat.post_id}}" target="_blank">Пост</a></td>
             <td class="stat-likes">
-              <span>{{stat.likes}}</span>
+              <span>{{stat.points}}</span>
             </td>
         </tr>
       </table>
       <div class="members-count" ng-hide="isAdmin">
         <span class="count-span">{{statistics.length | pluralize : ['участник', 'участника', 'участников']}}</span>
       </div>
-      <table id="stats" cellspacing="0" cellpadding="0" class="stats" hand-scrollable="400"  hand-scrollable-var="showStatistics" style="margin-bottom: 20px;">
+      <table id="stats" cellspacing="0" cellpadding="0"
+             class="stats" hand-scrollable="400"  hand-scrollable-var="showStatistics" style="margin-bottom: 20px;"
+             ng-mousemove="setCursor($event)">
         <tr ng-repeat="stat in statistics"
             ng-class="{'stat-row_my': stat.user_id == current_user.uid, 'stat-row_not-exists': !stat.exists}"
+            ng-mouseover="$parent.row = stat"
+            ng-mouseout="$parent.row = false"
             >
           <td class="stat-number">{{$index + (statPage - 1) * perPage + 1}}</td>
           <td class="stat-photo"><img ng-src="{{stat.user_photo}}"></td>
           <td class="stat-name"><a href="http://vk.com/id{{stat.user_id}}" target="_blank">{{stat.user_first_name}} {{stat.user_last_name}}</a></td>
           <td class="stat-post"><a href="http://vk.com/id{{stat.user_id}}?w=wall{{stat.user_id}}_{{stat.post_id}}" target="_blank">Пост</a></td>
           <td class="stat-likes">
-            <span>{{stat.likes}}</span>
+            <span>{{stat.points}}</span>
           </td>
         </tr>
       </table>
