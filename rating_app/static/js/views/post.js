@@ -16,6 +16,9 @@ WebApp.Views.Post = Backbone.Marionette.View.extend({
 		$.ajax({
 			dataType: 'json',
 			url: '/rating_app/user_data.php',
+			data: {
+				messages: 1
+			},
 			type: 'POST',
 			success: App._bind(function (response) {
 				this.data = response;
@@ -106,19 +109,21 @@ WebApp.Views.Post = Backbone.Marionette.View.extend({
 	},
 
 	getMessage: function (everyday) {
-		var users = this.data.users_last_day.reverse(),
-			text = 'Поздравляем самых активных подписчиков ' + App.getDayOfWeek() + ':';
+		var users = this.data.users_last_day.slice().reverse(),
+			data = {
+				day: App.getDayOfWeek()
+			},
+			messgeIndex = App.getRandomInt(0, this.data.messages.length - 1),
+			template = this.data.messages[messgeIndex].text;
+
+		template = twig({
+			data: template
+		});
 
 		for (var i = 0; i < users.length; i++) {
-			if (i < users.length - 1) {
-				text += ' @id' + users[i].id + ',';
-			} else {
-				text += ' и @id' + users[i].id;
-			}
+			data['username' + (i + 1)] = '@id' + users[i].id;
 		}
 
-		text += '\n\n';
-		text += 'Посмотреть полный рейтинг клуба — vk.com/app3880825';
-		return text;
+		return template.render(data);
 	}
 });

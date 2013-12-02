@@ -12,14 +12,6 @@ WebApp.resources = {
 		"libs/backbone.min.js",
 		"libs/backbone.marionette.min.js",
 		"libs/twig.min.js",
-
-		// Twitter Bootstrap
-		"libs/bootstrap/bootstrap-transition.min.js",
-		"libs/bootstrap/bootstrap-tooltip.min.js",
-		"libs/bootstrap/bootstrap-popover.min.js",
-		"libs/bootstrap/bootstrap-carousel.min.js",
-
-		// плагины jQuery
 		"libs/jquery/jquery.imagesloaded.min.js",
 		"libs/jquery/jquery.masonry.min.js"
 	],

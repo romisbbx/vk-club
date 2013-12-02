@@ -17,7 +17,7 @@ window.Post = function () {
 Post.prototype = {
 	renderTopActive: function (callback) {
 		App.renderTemplate('post-top-active', {
-			users: this.data.users_last_day.reverse(),
+			users: this.data.users_last_day.slice().reverse(),
 			day: App.getDayOfWeek()
 		}, App._bind(function (html) {
 			App.layouts.content
@@ -30,7 +30,7 @@ Post.prototype = {
 				if (callback && typeof(callback) === 'function') {
 					callback();
 				}
-			}, 1000);
+			}, 5000);
 		}, this));
 	},
 
@@ -53,7 +53,7 @@ Post.prototype = {
 				if (callback && typeof(callback) === 'function') {
 					callback();
 				}
-			}, 1000);
+			}, 5000);
 		}, this));
 	},
 

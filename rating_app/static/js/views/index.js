@@ -8,6 +8,8 @@ WebApp.Views.Index = Backbone.Marionette.View.extend({
 
 	initialize: function () {
 		this.curUser = App.appVars['viewer_id'];
+
+		this.data = App.config.bootstrap;
 		this.render();
 	},
 
@@ -17,20 +19,25 @@ WebApp.Views.Index = Backbone.Marionette.View.extend({
 				.empty()
 				.append(this.$el.html(html));
 
-			this.getData(App._bind(function () {
-				this.setUpdateTimer();
+			this.renderTopActive(this.data.users_last_day);
+			this.renderTop100(this.data.users);
 
-				this.renderTopActive(this.data.users_last_day);
-				this.renderTop100(this.data.users);
+			if (this.data.cur_user) { // cur_user - нет изначально в bootstrap данных
+				this.setUpdateTimer();
 				this.renderUser(this.data.cur_user);
-			}, this));
+			} else {
+				this.getData(App._bind(function () {
+					this.setUpdateTimer();
+					this.renderUser(this.data.cur_user);
+				}, this));
+			}
 		}, this));
 	},
 
 	renderTopActive: function (data) {
 		App.renderTemplate(this.templateTopActive, {
-			items: data.reverse(),
-			day: App.getDayOfWeek()
+			items: data.slice().reverse(),
+			day: App.getDayOfWeek(true)
 		}, App._bind(function (html) {
 			this.$el.find('#js-top-active')
 				.empty()
@@ -101,6 +108,7 @@ WebApp.Views.Index = Backbone.Marionette.View.extend({
 			type: 'POST',
 			success: App._bind(function (response) {
 				this.data = response;
+				App.config.bootstrap = this.data;
 
 				if (this.data.cur_user) {
 					// если текущий пользователь не в топе, то у него нет данных

@@ -19,7 +19,7 @@
 	<script type="text/javascript" src="/rating_app/static/js/app.loader.js"></script>
 	<script type="text/javascript">
 		WebApp.config = {
-			debugMode: true,
+			debugMode: false,
 			debugEvent: false,
 			locations: {
 				js: '/rating_app/static/js/',
@@ -27,13 +27,15 @@
 				css: '/rating_app/static/_build/css/',
 				img: '/rating_app/static/img/',
 				api: '/api/'
-			}
+			},
+			bootstrap: <?php include 'user_data.php'; ?>
 		};
 
 		window.config = {};
 
 		if (window.location.host == 'vk-club.local') {
 			window.config.VK_GROUPE_ID = 58328169;
+			WebApp.config.debugMode = true;
 		} else {
 			window.config.VK_GROUPE_ID = 48475446;
 		}
@@ -46,7 +48,7 @@
 			new WebApp.Loader();
 		});
 	</script>
-	<!-- TODO: добавить подключение скриптов для production версии -->
+	<script src="//localhost:35729/livereload.js"></script>
 </head>
 <body>
 <!--	<a class="header icon-logo" id="js-header" href="/"></a>-->
