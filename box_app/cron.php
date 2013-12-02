@@ -16,11 +16,18 @@ foreach ($data as $info) {
   $posts = $posts['response'];
   $info->exists = count($posts);
   if ($info->exists) {
-    $info->likes = $posts[0]['likes']['count'];
+    $likes = $vk->api('likes.getList', array('type' => 'post', 'owner_id' => $info->user_id, 'item_id' => $info->post_id));
+    $friendsLikes = $vk->api('likes.getList', array('type' => 'post', 'owner_id' => $info->user_id, 'item_id' => $info->post_id, 'friends_only' => 1));
+    $info->likes = $likes['response']['count'];
+    $info->friends_likes = $friendsLikes['response']['count'];
   }
   if (!isset($info->likes)) {
     $info->likes = 0;
   }
+  if (!isset($info->friends_likes)) {
+    $info->likes = 0;
+  }
+  $info->points = $info->likes * 0.1 + $info->friends_likes*5;
 }
 
 file_put_contents(FILENAME, json_encode($data));

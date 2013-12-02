@@ -46,7 +46,7 @@ angular.module("vk").controller('HandikaCtrl', ['$scope', 'vkontakte', '$http', 
     else {
       $scope.start();
     }
-  }
+  };
 
   $scope.next = function(){
     $scope.requestStarted = true;
@@ -139,6 +139,13 @@ angular.module("vk").controller('HandikaCtrl', ['$scope', 'vkontakte', '$http', 
   $scope.prevPage = function(){
     $scope.statPage--;
   };
+
+  $scope.setCursor = function(e){
+    var offset = $("#statPopup").offset();
+    $scope.tooltipLeft = e.pageX - offset.left + 10 + 'px';
+    $scope.tooltipTop = e.pageY - offset.top - 10 + 'px';
+  };
+
 
   setStep(1);
 
