@@ -17,9 +17,11 @@ foreach ($data as $info) {
   $info->exists = count($posts);
   if ($info->exists) {
     $likes = $vk->api('likes.getList', array('type' => 'post', 'owner_id' => $info->user_id, 'item_id' => $info->post_id));
-    $friendsLikes = $vk->api('likes.getList', array('type' => 'post', 'owner_id' => $info->user_id, 'item_id' => $info->post_id, 'friends_only' => 1));
+    $friends = $vk->api('friends.get', array('user_id' => $info->user_id));
+    $friends = $friends['response'];
+    $friends_likes = array_intersect($likes['response']['users'], $friends);
     $info->likes = $likes['response']['count'];
-    $info->friends_likes = $friendsLikes['response']['count'];
+    $info->friends_likes = count($friends_likes);
   }
   if (!isset($info->likes)) {
     $info->likes = 0;
