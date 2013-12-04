@@ -1,6 +1,6 @@
 <?php
-error_reporting(E_ALL|E_STRICT);
-ini_set('display_errors', 'on');
+// error_reporting(E_ALL|E_STRICT);
+// ini_set('display_errors', 'on');
 
 require_once 'vk/VK.php';
 require_once 'vk/VKException.php';
@@ -25,7 +25,7 @@ foreach ($data as $info) {
     $info->likes = 0;
   }
   if (!isset($info->friends_likes)) {
-    $info->likes = 0;
+    $info->friends_likes = 0;
   }
   $info->points = $info->likes * 0.1 + $info->friends_likes*5;
 }
