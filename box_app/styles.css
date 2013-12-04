@@ -9,7 +9,7 @@ body {
 }
 
 .b-body_step1 {
-  background: url(images/box-bg.jpg) top left no-repeat;
+  background: url(./images/box-bg.jpg) top left no-repeat;
 }
 
 [ng\:cloak], [ng-cloak], .ng-cloak {
@@ -70,7 +70,7 @@ h1 {
 }
 
 .b-step_finish {
-  background: url(images/box.png) bottom center no-repeat;
+  background: url(./images/box.png) bottom center no-repeat;
   height: 795px;
   margin-bottom: -18px;
 }
@@ -440,6 +440,8 @@ h1 {
 .b-next-step_disabled {
   color: #FFFFFF;
   background: #CCE1F1;
+  cursor: default;
+  pointer-events: none;
 }
 
 .b-next-step.b-next-step_disabled:before {

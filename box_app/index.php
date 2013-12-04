@@ -34,10 +34,10 @@
             <div class="b-master">
               <div class="b-master-title">Приз предоставлен:</div>
               <div class="b-master-avatar">
-                <a ng-href="{{photo.master.link}}" title="{{photo.master.name}}"><img ng-src="{{photo.master.avatar}}"></a>
+                <a ng-href="{{photo.master.link}}" target="_blank" title="{{photo.master.name}}"><img ng-src="{{photo.master.avatar}}"></a>
               </div>
               <div class="b-master-name">
-                <a ng-href="{{photo.master.link}}" class="b-master-link" title="{{photo.master.name}}">{{photo.master.name}}</a>
+                <a ng-href="{{photo.master.link}}" target="_blank"  class="b-master-link" title="{{photo.master.name}}">{{photo.master.name}}</a>
               </div>
             </div>
           </div>
@@ -79,7 +79,7 @@
     </div>
     <div id="step4" ng-show="step==4" class="b-step b-step_finish">
       <h1 class="h1_big">Финиш</h1>
-      <p class="b-fuck-yeah">Теперь мы опубликуем картинку с набором ваших товаров в альбоме конкурса, а<br />вам останется только рассказать о своей коробке друзьям. Победа тем ближе,<br />чем большему числу людей понравится ваш набор. Не абывайте, что конкурс только<br /> для подписчиков паблика <a href="http://vk.com/handika">Handika</a>.</p>
+      <p class="b-fuck-yeah">Теперь мы опубликуем картинку с набором ваших товаров в альбоме конкурса, а<br />вам останется только рассказать о своей коробке друзьям. Победа тем ближе,<br />чем большему числу людей понравится ваш набор. Не забывайте, что конкурс только<br /> для подписчиков паблика <a href="http://vk.com/handika" target="_blank">Handika</a>.</p>
       <button class="b-button b-button_big" ng-click="start(); showStatistics = true;">Смотреть участников</button>
     </div>
     <div ng-show="showRules" class="b-popup b-popup_rules">
@@ -120,7 +120,7 @@
         </div>
         <div class="b-likes-line">
           Лайки:
-          <span class="b-likes-count">{{row.likes * 5}}</span>
+          <span class="b-likes-count">{{row.likes}}</span>
           <span class="b-likes-mult">&times;</span>
           <span class="b-likes-digit b-likes-digit_float">0,1</span>
           <span class="b-likes-eq">=</span>
