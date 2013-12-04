@@ -102,7 +102,7 @@
       <span role="link" ng-click="secondTime = false" class="close">&times;</span>
       <h1 class="h1_stat">Вы уже участвуете :)</h1>
       <div class="second-time-text">
-        Если мы не ошибаемся — вы уже участвовали в конкурсе. Мы не устанавливаем ограничений, принять участие можно несколько раз, но ваши достиженияне складываются, т.е. количество отметок «Мне нравится» у каждого поста будет подсчитано отдельно, а каждый ваш пост это новая заявка.
+        Если мы не ошибаемся — вы уже участвовали в конкурсе. Мы не устанавливаем ограничений, принять участие можно несколько раз, но ваши достижения не складываются, т.е. количество отметок «Мне нравится» у каждого поста будет подсчитано отдельно, а каждый ваш пост это новая заявка.
       </div>
       <button class="b-button b-button_big" ng-click="secondTime = false; start()">Собрать еще одну коробку</button>
     </div>
@@ -128,7 +128,7 @@
         </div>
       </div>
       <table cellspacing="0" cellpadding="0" class="stats"
-             ng-hide="isAdmin" hand-scrollable="200"  hand-scrollable-var="showStatistics"
+             hand-scrollable="200"  hand-scrollable-var="showStatistics"
              ng-mousemove="setCursor($event)">
         <tr ng-repeat="stat in statistics | filter: {user_id: current_user.uid}"
             ng-class="{'stat-row_my': $index == 0, 'stat-row_small': $index != 0, 'stat-row_not-exists': !stat.exists}"
