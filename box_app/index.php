@@ -116,7 +116,7 @@
           <span class="b-likes-mult">&times;</span>
           <span class="b-likes-digit">5</span>
           <span class="b-likes-eq">=</span>
-          <span class="b-likes-points">{{row.friends_likes * 5}}</span>
+          <span class="b-likes-points">{{row.friends_likes * 5 | number}}</span>
         </div>
         <div class="b-likes-line">
           Лайки:
@@ -124,7 +124,7 @@
           <span class="b-likes-mult">&times;</span>
           <span class="b-likes-digit b-likes-digit_float">0,1</span>
           <span class="b-likes-eq">=</span>
-          <span class="b-likes-points">{{row.likes * 0.1}}</span>
+          <span class="b-likes-points">{{row.likes / 10 | number}}</span>
         </div>
       </div>
       <table cellspacing="0" cellpadding="0" class="stats"
@@ -160,7 +160,7 @@
           <td class="stat-name"><a href="http://vk.com/id{{stat.user_id}}" target="_blank">{{stat.user_first_name}} {{stat.user_last_name}}</a></td>
           <td class="stat-post"><a href="http://vk.com/id{{stat.user_id}}?w=wall{{stat.user_id}}_{{stat.post_id}}" target="_blank">Пост</a></td>
           <td class="stat-likes">
-            <span>{{stat.points}}</span>
+            <span>{{stat.points | number}}</span>
           </td>
         </tr>
       </table>
