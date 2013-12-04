@@ -770,8 +770,16 @@ h1 {
   opacity: .5;
 }
 
-.stat-row_not-exists .stat-post a {
-  visibility: hidden;
+.stat-row_not-exists .stat-post .post-link {
+  display: none;
+}
+
+.stat-post .post-not-exists {
+  display: none;
+}
+
+.stat-row_not-exists .stat-post .post-not-exists {
+  display: block;
 }
 
 .scrollable-outer {

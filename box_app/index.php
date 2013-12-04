@@ -158,7 +158,10 @@
           <td class="stat-number">{{$index + (statPage - 1) * perPage + 1}}</td>
           <td class="stat-photo"><img ng-src="{{stat.user_photo}}"></td>
           <td class="stat-name"><a href="http://vk.com/id{{stat.user_id}}" target="_blank">{{stat.user_first_name}} {{stat.user_last_name}}</a></td>
-          <td class="stat-post"><a href="http://vk.com/id{{stat.user_id}}?w=wall{{stat.user_id}}_{{stat.post_id}}" target="_blank">Пост</a></td>
+          <td class="stat-post">
+            <a href="http://vk.com/id{{stat.user_id}}?w=wall{{stat.user_id}}_{{stat.post_id}}" target="_blank" class="post-link">Пост</a>
+            <span class="post-not-exists">Пост не найден</span>
+          </td>
           <td class="stat-likes">
             <span>{{stat.points | number}}</span>
           </td>
