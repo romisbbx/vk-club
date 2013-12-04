@@ -144,7 +144,7 @@
             </td>
         </tr>
       </table>
-      <div class="members-count" ng-hide="isAdmin">
+      <div class="members-count">
         <span class="count-span">{{statistics.length | pluralize : ['участник', 'участника', 'участников']}}</span>
       </div>
       <table id="stats" cellspacing="0" cellpadding="0"
