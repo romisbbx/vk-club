@@ -24,13 +24,16 @@ function squarize($src, $size) {
   return $res;
 }
 
+$tempdir = "temp$input->uid";
+mkdir("./$tempdir");
+
 foreach ($input->images as $i => $image) {
   $file = explode('.', $image);
   $file = array_reverse($file);
-  file_put_contents("./temp/$i.".$file[0], file_get_contents($image));
+  file_put_contents("./$tempdir/$i.".$file[0], file_get_contents($image));
 }
 
-$files = glob('./temp/*');
+$files = glob("./$tempdir/*");
 $count = count($files);
 
 
@@ -179,12 +182,12 @@ foreach ($map as $i => $position) {
   imagecopyresampled($result, $image, $position['x'], $position['y'], 0, 0, $position['width'], $position['height'], max($size[0], $size[1]), max($size[0], $size[1]));
 }
 
-file_put_contents("./temp/avatar.jpg", file_get_contents($input->avatar));
-$avatar = imagecreatefromjpeg('./temp/avatar.jpg');
+file_put_contents("./$tempdir/avatar.jpg", file_get_contents($input->avatar));
+$avatar = imagecreatefromjpeg("./$tempdir/avatar.jpg");
 imagecopyresampled($result, $avatar, 466, 22, 0, 0, 81, 81, 200, 200);
-imagejpeg($result, './results/result.jpg', 100);
+imagejpeg($result, "./$tempdir/result.jpg", 100);
 
-$data['file1'] = '@'.realpath('./results/result.jpg');
+$data['file1'] = '@'.realpath("./$tempdir/result.jpg");
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $input->upload_url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -193,11 +196,11 @@ curl_setopt($ch, CURLOPT_POST, 1);
 curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 echo curl_exec($ch);
 curl_close($ch);
-#rmdir('./temp');
-foreach (array('./temp/*', './results/*') as $dir) {
-  $files = glob($dir); // get all file names
-  foreach($files as $file){ // iterate files
-    if(is_file($file))
-      unlink($file); // delete file
-  }
+
+$files = glob("./$tempdir/*"); // get all file names
+foreach($files as $file){ // iterate files
+  if(is_file($file))
+    unlink($file); // delete file
 }
+
+rmdir("./$tempdir");

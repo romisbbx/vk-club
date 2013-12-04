@@ -51,7 +51,10 @@ angular.module("vk").controller('HandikaCtrl', ['$scope', 'vkontakte', '$http', 
   $scope.next = function(){
     $scope.requestStarted = true;
     service.uploadPhoto(service.AID, function(url){
-      var params = {images: []};
+      var params = {
+        images: [],
+        uid: $scope.current_user.uid
+      };
       for (var i in selected) {
         params.images.push(selected[i]);
       }
