@@ -8,6 +8,7 @@ const FILENAME = './data/results.dat';
 
 $contents = @file_get_contents(FILENAME);
 $data = json_decode($contents);
+$new_data = array();
 
 $vk = new VK\VK(3977829, 'HandikaParser');
 
@@ -37,6 +38,10 @@ foreach ($data as $info) {
     $info->friends_likes = 0;
   }
   $info->points = $info->likes * 0.1 + $info->friends_likes*5;
+  if ($info->fails_count < 5) {
+    $new_data[] = $info;
+  }
 }
 
-file_put_contents(FILENAME, json_encode($data));
+file_put_contents(FILENAME, json_encode($new_data));
+
