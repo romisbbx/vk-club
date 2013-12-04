@@ -22,6 +22,13 @@ foreach ($data as $info) {
     $friends_likes = array_intersect($likes['response']['users'], $friends);
     $info->likes = $likes['response']['count'];
     $info->friends_likes = count($friends_likes);
+    $info->fails_count = 0;
+  }
+  else {
+    if (!isset($info->fails_count)) {
+      $info->fails_count = 0;
+    }
+    $info->fails_count++;
   }
   if (!isset($info->likes)) {
     $info->likes = 0;
