@@ -11,13 +11,16 @@
 	<meta name="viewport" content="width=device-width">
 
 	<link href='https://fonts.googleapis.com/css?family=Roboto:300,300italic,400,400italic,100,100italic&subset=cyrillic-ext' rel='stylesheet' type='text/css'>
-	<link type="text/css" rel="stylesheet" href="/rating_app/static/_build/css/icons/icons.data.svg.css?rel=1386219990790" />
-	<link type="text/css" rel="stylesheet" href="/rating_app/static/_build/css/main.css?rel=1386219990789" />
+	<link type="text/css" rel="stylesheet" href="/rating_app/static/_build/css/icons/icons.data.svg.css?rel=1386235523955" />
+	<link id="js-revision" type="text/css" rel="stylesheet" href="/rating_app/static/_build/css/main.css?rel=1386235523952" />
 
 	<script type="text/javascript" src="https://vk.com/js/api/xd_connection.js?2"></script>
 	<script type="text/javascript" src="https://vk.com/js/api/openapi.js?101"></script>
-	<script type="text/javascript" src="/rating_app/static/js/loader.js?rel=1386219990792"></script>
+	<script type="text/javascript" src="/rating_app/static/js/loader.js?rel=1386235523957"></script>
 	<script type="text/javascript">
+		var revisionElem = document.getElementById('js-revision'),
+			revision = '?' + (revisionElem ? (revisionElem.getAttribute('href').split('?')[1]) : '0');
+
 		WebApp.config = {
 			debugMode: false,
 			debugEvent: false,
@@ -28,7 +31,8 @@
 				img: '/rating_app/static/img/',
 				api: '/api/'
 			},
-			bootstrap: <?php include 'user_data.php'; ?>
+			revision: revision,
+			bootstrap: <?php include 'user_data.php'; ?>,
 		};
 
 		window.config = {};
@@ -42,7 +46,7 @@
 
 		window.config.VK_POST_OFFSET = 60 * 9; // смещения для отложенного постинга в минутах
 	</script>
-	<script type="text/javascript" src="/rating_app/static/js/files.js?rel=1386219990795"></script>
+	<script type="text/javascript" src="/rating_app/static/js/files.js?rel=1386235523959"></script>
 	<script type="text/javascript">
 		VK.init(function() {
 			new WebApp.Loader();
