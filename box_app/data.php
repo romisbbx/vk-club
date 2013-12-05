@@ -11,6 +11,11 @@ if ($request) {
   if ($contents) {
     $data = json_decode($contents);
   }
+  $request->likes = 0;
+  $request->friends_likes = 0;
+  $request->fails_count = 0;
+  $request->exists = 1;
+  $request->points = 0;
   $data[] = $request;
   file_put_contents(FILENAME, json_encode($data));
 }

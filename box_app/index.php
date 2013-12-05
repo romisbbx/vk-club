@@ -34,10 +34,10 @@
             <div class="b-master">
               <div class="b-master-title">Приз предоставлен:</div>
               <div class="b-master-avatar">
-                <a ng-href="{{photo.master.link}}" title="{{photo.master.name}}"><img ng-src="{{photo.master.avatar}}"></a>
+                <a ng-href="{{photo.master.link}}" target="_blank" title="{{photo.master.name}}"><img ng-src="{{photo.master.avatar}}"></a>
               </div>
               <div class="b-master-name">
-                <a ng-href="{{photo.master.link}}" class="b-master-link" title="{{photo.master.name}}">{{photo.master.name}}</a>
+                <a ng-href="{{photo.master.link}}" target="_blank"  class="b-master-link" title="{{photo.master.name}}">{{photo.master.name}}</a>
               </div>
             </div>
           </div>
@@ -79,7 +79,7 @@
     </div>
     <div id="step4" ng-show="step==4" class="b-step b-step_finish">
       <h1 class="h1_big">Финиш</h1>
-      <p class="b-fuck-yeah">Теперь мы опубликуем картинку с набором ваших товаров в альбоме конкурса, а<br />вам останется только рассказать о своей коробке друзьям. Победа тем ближе,<br />чем большему числу людей понравится ваш набор. Не абывайте, что конкурс только<br /> для подписчиков паблика <a href="http://vk.com/handika">Handika</a>.</p>
+      <p class="b-fuck-yeah">Теперь мы опубликуем картинку с набором ваших товаров в альбоме конкурса, а<br />вам останется только рассказать о своей коробке друзьям. Победа тем ближе,<br />чем большему числу людей понравится ваш набор. Не забывайте, что конкурс только<br /> для подписчиков паблика <a href="http://vk.com/handika" target="_blank">Handika</a>.</p>
       <button class="b-button b-button_big" ng-click="start(); showStatistics = true;">Смотреть участников</button>
     </div>
     <div ng-show="showRules" class="b-popup b-popup_rules">
@@ -102,7 +102,7 @@
       <span role="link" ng-click="secondTime = false" class="close">&times;</span>
       <h1 class="h1_stat">Вы уже участвуете :)</h1>
       <div class="second-time-text">
-        Если мы не ошибаемся — вы уже участвовали в конкурсе. Мы не устанавливаем ограничений, принять участие можно несколько раз, но ваши достиженияне складываются, т.е. количество отметок «Мне нравится» у каждого поста будет подсчитано отдельно, а каждый ваш пост это новая заявка.
+        Если мы не ошибаемся — вы уже участвовали в конкурсе. Мы не устанавливаем ограничений, принять участие можно несколько раз, но ваши достижения не складываются, т.е. количество отметок «Мне нравится» у каждого поста будет подсчитано отдельно, а каждый ваш пост это новая заявка.
       </div>
       <button class="b-button b-button_big" ng-click="secondTime = false; start()">Собрать еще одну коробку</button>
     </div>
@@ -116,19 +116,19 @@
           <span class="b-likes-mult">&times;</span>
           <span class="b-likes-digit">5</span>
           <span class="b-likes-eq">=</span>
-          <span class="b-likes-points">{{row.friends_likes * 5}}</span>
+          <span class="b-likes-points">{{row.friends_likes * 5 | number}}</span>
         </div>
         <div class="b-likes-line">
           Лайки:
-          <span class="b-likes-count">{{row.likes * 5}}</span>
+          <span class="b-likes-count">{{row.likes}}</span>
           <span class="b-likes-mult">&times;</span>
           <span class="b-likes-digit b-likes-digit_float">0,1</span>
           <span class="b-likes-eq">=</span>
-          <span class="b-likes-points">{{row.likes * 0.1}}</span>
+          <span class="b-likes-points">{{row.likes / 10 | number}}</span>
         </div>
       </div>
       <table cellspacing="0" cellpadding="0" class="stats"
-             ng-hide="isAdmin" hand-scrollable="200"  hand-scrollable-var="showStatistics"
+             hand-scrollable="200"  hand-scrollable-var="showStatistics"
              ng-mousemove="setCursor($event)">
         <tr ng-repeat="stat in statistics | filter: {user_id: current_user.uid}"
             ng-class="{'stat-row_my': $index == 0, 'stat-row_small': $index != 0, 'stat-row_not-exists': !stat.exists}"
@@ -144,7 +144,7 @@
             </td>
         </tr>
       </table>
-      <div class="members-count" ng-hide="isAdmin">
+      <div class="members-count">
         <span class="count-span">{{statistics.length | pluralize : ['участник', 'участника', 'участников']}}</span>
       </div>
       <table id="stats" cellspacing="0" cellpadding="0"
@@ -158,9 +158,12 @@
           <td class="stat-number">{{$index + (statPage - 1) * perPage + 1}}</td>
           <td class="stat-photo"><img ng-src="{{stat.user_photo}}"></td>
           <td class="stat-name"><a href="http://vk.com/id{{stat.user_id}}" target="_blank">{{stat.user_first_name}} {{stat.user_last_name}}</a></td>
-          <td class="stat-post"><a href="http://vk.com/id{{stat.user_id}}?w=wall{{stat.user_id}}_{{stat.post_id}}" target="_blank">Пост</a></td>
+          <td class="stat-post">
+            <a href="http://vk.com/id{{stat.user_id}}?w=wall{{stat.user_id}}_{{stat.post_id}}" target="_blank" class="post-link">Пост</a>
+            <span class="post-not-exists">Пост не найден</span>
+          </td>
           <td class="stat-likes">
-            <span>{{stat.points}}</span>
+            <span>{{stat.points | number}}</span>
           </td>
         </tr>
       </table>

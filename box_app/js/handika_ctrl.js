@@ -51,7 +51,10 @@ angular.module("vk").controller('HandikaCtrl', ['$scope', 'vkontakte', '$http', 
   $scope.next = function(){
     $scope.requestStarted = true;
     service.uploadPhoto(service.AID, function(url){
-      var params = {images: []};
+      var params = {
+        images: [],
+        uid: $scope.current_user.uid
+      };
       for (var i in selected) {
         params.images.push(selected[i]);
       }
@@ -73,7 +76,12 @@ angular.module("vk").controller('HandikaCtrl', ['$scope', 'vkontakte', '$http', 
   };
 
   $scope.post = function(){
-    service.wallPost({message: 'Я выбрал эти призы в конкурсе Handika Box', attachments: 'photo'+cover.owner_id+'_' + cover.pid}, function(data){
+    var word = 'выбрал';
+    if ($scope.current_user.sex == 1) {
+      word += 'а';
+    }
+
+    service.wallPost({message: 'Я '+word+' эти призы в конкурсе Handika Box', attachments: 'photo'+cover.owner_id+'_' + cover.pid}, function(data){
       if (data.response.post_id) {
         $scope.posted = true;
         setStep(4);
