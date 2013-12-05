@@ -7,7 +7,14 @@
 		<a href="/{{ index }}/" class="pagination-item js-ajax {% if index == active %} active{% endif %}" data-page="{{ index }}">{{ index }}</a>
 	{% endfor %}
 
-	{#<li class="pagination-item -more">...</li>#}
+	{% if not cur_user_page is empty %}
+		{% if cur_user_page > count %}
+			{% if cur_user_page != count + 1 %}
+				<li class="pagination-item -more">...</li>
+			{% endif %}
+			<a href="/{{ cur_user_page }}/" class="pagination-item js-ajax {% if cur_user_page == active %} active{% endif %}" data-page="{{ cur_user_page }}">{{ cur_user_page }}</a>
+		{% endif %}
+	{% endif %}
 
 	{% if not strlk is empty %}
 		<li class="pagination-item -strlk-right"><span>&#8250;</span></li>
