@@ -2,11 +2,12 @@
 // error_reporting(E_ALL|E_STRICT);
 // ini_set('display_errors', 'on');
 
-require_once 'vk/VK.php';
-require_once 'vk/VKException.php';
-const FILENAME = './data/results.dat';
+$root = dirname(__FILE__);
+require_once "$root/vk/VK.php";
+require_once "$root/vk/VKException.php";
+$filename = "$root/data/results.dat";
 
-$contents = @file_get_contents(FILENAME);
+$contents = @file_get_contents($filename);
 $data = json_decode($contents);
 $new_data = array();
 
@@ -43,5 +44,5 @@ foreach ($data as $info) {
   }
 }
 
-file_put_contents(FILENAME, json_encode($new_data));
+file_put_contents($filename, json_encode($new_data));
 
