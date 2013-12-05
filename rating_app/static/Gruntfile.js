@@ -47,6 +47,7 @@ module.exports = function(grunt) {
 				options: {
 					sassDir: '<%= app.stylesheets.src %>',
 					cssDir: '<%= app.stylesheets.compiled %>',
+					imagesDir: '<%= app.images.src %>',
 //					outputStyle: 'expanded',
 					outputStyle: 'compressed',
 					noLineComments: false,
@@ -61,6 +62,7 @@ module.exports = function(grunt) {
 					sassDir: '<%= app.stylesheets.src %>',
 					cssDir: '<%= app.stylesheets.compiled %>',
 					specify: '<%= app.stylesheets.specify %>',
+					imagesDir: '<%= app.images.src %>',
 //					outputStyle: 'expanded',
 					outputStyle: 'compressed',
 					noLineComments: false,
@@ -75,6 +77,7 @@ module.exports = function(grunt) {
 					sassDir: '<%= app.stylesheets.src %>',
 					cssDir: '<%= app.stylesheets.compiled %>',
 					specify: '<%= app.stylesheets.specify %>',
+					imagesDir: '<%= app.images.src %>',
 					outputStyle: 'compressed',
 					noLineComments: true,
 					generatedImagesDir: '<%= app.images.compiled %>',
@@ -98,12 +101,7 @@ module.exports = function(grunt) {
 		watch: {
 			scss: {
 				files: '<%= app.stylesheets.src %>/**/*.sass',
-				tasks: 'compass:watch',
-				options: {
-					livereload: {
-						port: 35729
-					}
-				}
+				tasks: 'compass:watch'
 			}
 		}
 	};

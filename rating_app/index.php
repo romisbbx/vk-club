@@ -48,7 +48,6 @@
 			new WebApp.Loader();
 		});
 	</script>
-	<script src="//localhost:35729/livereload.js"></script>
 </head>
 <body>
 <!--	<a class="header icon-logo" id="js-header" href="/"></a>-->
