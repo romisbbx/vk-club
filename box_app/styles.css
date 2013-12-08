@@ -322,6 +322,7 @@ h1 {
   font-size: 11px;
   display: inline-block;
   vertical-align: middle;
+  width: 100px;
 }
 
 .b-master-title {
