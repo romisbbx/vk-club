@@ -76,12 +76,15 @@ angular.module("vk").controller('HandikaCtrl', ['$scope', 'vkontakte', '$http', 
   };
 
   $scope.post = function(){
-    var word = 'выбрал';
+    var phrase = 'Я выбрал эти призы в конкурсе «Коробка желаний»:';
     if ($scope.current_user.sex == 1) {
-      word += 'а';
+      phrase = 'Я выбрала эти призы в конкурсе «Коробка желаний»:';
+    }
+    else if ($scope.current_user.sex == 0) {
+      phrase = 'Мои призы в конкурсе «Коробка желаний»';
     }
 
-    service.wallPost({message: 'Я '+word+' эти призы в конкурсе Handika Box', attachments: 'photo'+cover.owner_id+'_' + cover.pid}, function(data){
+    service.wallPost({message: phrase, attachments: 'photo'+cover.owner_id+'_' + cover.pid}, function(data){
       if (data.response.post_id) {
         $scope.posted = true;
         setStep(4);

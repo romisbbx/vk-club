@@ -9,7 +9,7 @@
   <div id="wrapper"  ng-show="user_loaded" ng-load="load()" ng-cloak>
     <div class="b-shadow" ng-show="showStatistics || secondTime || showRules"></div>
     <div id="step1" ng-show="step == 1" class="b-step b-step_first">
-      <h1 class="b-title_first">Handika Box</h1>
+      <h1 class="b-title_first">Коробка желаний</h1>
       <p class="b-description b-description_first">
         Комплимент подписчикам Хандики к&nbsp;Новому Году&nbsp;&mdash; шанс выиграть коробку<br />наполненную вашими пожеланиями. Каждый день мы&nbsp;принимаем от&nbsp;вас заявки,<br />а в&nbsp;день окончания конкурса мы&nbsp;определим счастливчика, которому мы&nbsp;вышлем<br />заботливо упакованную коробку с&nbsp;выбранными авторскими товарами.&nbsp;Приступим?
       </p>
@@ -49,6 +49,7 @@
       <div class="finish-selection">
         <div class="b-center">
           <p ng-class="hasSelected && 'invisible'" class="b-hint">Чтобы продолжить, положи что-нибудь в коробку.</p>
+          <p class="see-more">Рассмотреть призы подробнее можно в альбоме конкурса — <a href="//vk.com/album-53083410_183726240" target="_blank">http://vk.com/handika/album...</a></p>
           <img src="images/loader.gif" alt="" ng-show="requestStarted">
         </div>
         <button class="b-button b-button_big" ng-click="next()" ng-hide="requestStarted" ng-disabled="!hasSelected">Далее</button>
@@ -80,7 +81,7 @@
     <div id="step4" ng-show="step==4" class="b-step b-step_finish">
       <h1 class="h1_big">Финиш</h1>
       <p class="b-fuck-yeah">Теперь мы опубликуем картинку с набором ваших товаров в альбоме конкурса, а<br />вам останется только рассказать о своей коробке друзьям. Победа тем ближе,<br />чем большему числу людей понравится ваш набор. Не забывайте, что конкурс только<br /> для подписчиков паблика <a href="//vk.com/handika" target="_blank">Handika</a>.</p>
-      <button class="b-button b-button_big" ng-click="start(); showStatistics = true;">Смотреть участников</button>
+      <button class="b-button b-button_big" ng-click="showStatistics = true;">Смотреть участников</button>
     </div>
     <div ng-show="showRules" class="b-popup b-popup_rules">
       <span role="link" ng-click="showRules = false" class="close">&times;</span>
