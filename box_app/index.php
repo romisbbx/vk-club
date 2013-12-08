@@ -1,7 +1,7 @@
 <html>
 <head>
   <link rel="stylesheet" href="styles.css">
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Roboto:400,300,500,700&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
   <script type="text/javascript" src="//vk.com/js/api/openapi.js?96"></script>
   <meta charset="utf-8">
 </head>
@@ -79,7 +79,7 @@
     </div>
     <div id="step4" ng-show="step==4" class="b-step b-step_finish">
       <h1 class="h1_big">Финиш</h1>
-      <p class="b-fuck-yeah">Теперь мы опубликуем картинку с набором ваших товаров в альбоме конкурса, а<br />вам останется только рассказать о своей коробке друзьям. Победа тем ближе,<br />чем большему числу людей понравится ваш набор. Не забывайте, что конкурс только<br /> для подписчиков паблика <a href="http://vk.com/handika" target="_blank">Handika</a>.</p>
+      <p class="b-fuck-yeah">Теперь мы опубликуем картинку с набором ваших товаров в альбоме конкурса, а<br />вам останется только рассказать о своей коробке друзьям. Победа тем ближе,<br />чем большему числу людей понравится ваш набор. Не забывайте, что конкурс только<br /> для подписчиков паблика <a href="//vk.com/handika" target="_blank">Handika</a>.</p>
       <button class="b-button b-button_big" ng-click="start(); showStatistics = true;">Смотреть участников</button>
     </div>
     <div ng-show="showRules" class="b-popup b-popup_rules">
@@ -137,8 +137,8 @@
             >
             <td class="stat-number">{{statistics.indexOf(stat) + 1}}</td>
             <td class="stat-photo"><img ng-src="{{stat.user_photo}}"></td>
-            <td class="stat-name"><a href="http://vk.com/id{{stat.user_id}}" target="_blank">{{stat.user_first_name}} {{stat.user_last_name}}</a></td>
-            <td class="stat-post"><a href="http://vk.com/id{{stat.user_id}}?w=wall{{stat.user_id}}_{{stat.post_id}}" target="_blank">Пост</a></td>
+            <td class="stat-name"><a href="//vk.com/id{{stat.user_id}}" target="_blank">{{stat.user_first_name}} {{stat.user_last_name}}</a></td>
+            <td class="stat-post"><a href="//vk.com/id{{stat.user_id}}?w=wall{{stat.user_id}}_{{stat.post_id}}" target="_blank">Пост</a></td>
             <td class="stat-likes">
               <span>{{stat.points}}</span>
             </td>
@@ -157,9 +157,9 @@
             >
           <td class="stat-number">{{$index + (statPage - 1) * perPage + 1}}</td>
           <td class="stat-photo"><img ng-src="{{stat.user_photo}}"></td>
-          <td class="stat-name"><a href="http://vk.com/id{{stat.user_id}}" target="_blank">{{stat.user_first_name}} {{stat.user_last_name}}</a></td>
+          <td class="stat-name"><a href="//vk.com/id{{stat.user_id}}" target="_blank">{{stat.user_first_name}} {{stat.user_last_name}}</a></td>
           <td class="stat-post">
-            <a href="http://vk.com/id{{stat.user_id}}?w=wall{{stat.user_id}}_{{stat.post_id}}" target="_blank" class="post-link">Пост</a>
+            <a href="//vk.com/id{{stat.user_id}}?w=wall{{stat.user_id}}_{{stat.post_id}}" target="_blank" class="post-link">Пост</a>
             <span class="post-not-exists">Пост не найден</span>
           </td>
           <td class="stat-likes">
@@ -174,8 +174,8 @@
       <a href="" ng-click="showStatistics = true" class="b-center" >Участники</a>
     </div>
   </div>
-  <script src="http://vk.com/js/api/xd_connection.js?2" type="text/javascript"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="//vk.com/js/api/xd_connection.js?2" type="text/javascript"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <script src="js/angular.js"></script>
   <script src="js/app.js"></script>
   <script src="js/vk.service.js"></script>
