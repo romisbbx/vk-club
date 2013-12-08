@@ -1,4 +1,4 @@
-// Набор расширений для `Backbone` и `Marionette`
+// Набор расширений для `Backbone`, `Marionette`, `Twig`
 
 
 // Добавляем декодер фрагмента url
@@ -9,3 +9,14 @@ Backbone.History.prototype.getFragment = (function(fn) {
 		return decodeURIComponent(fragment)
 	};
 })(Backbone.History.prototype.getFragment);
+
+// К запросам шаблонов добавляем ревизию
+Twig.extend(function (Twig) {
+	Twig.Templates.loadRemote = (function(fn) {
+		return function(options) {
+			arguments[0] += WebApp.config.revision;
+			return fn.apply(this, arguments)
+		};
+	})(Twig.Templates.loadRemote);
+});
+

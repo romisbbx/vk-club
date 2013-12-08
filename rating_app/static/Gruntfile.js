@@ -98,6 +98,33 @@ module.exports = function(grunt) {
 			}
 		},
 
+		cachebreaker : {
+			mainCss: {
+				asset_url : '<%= app.stylesheets.compiled %>/main.css',
+				files: {
+					src : '../index.php'
+				}
+			},
+			icons: {
+				asset_url : '<%= app.stylesheets.compiled %>/icons/icons.data.svg.css',
+				files: {
+					src : '../index.php'
+				}
+			},
+			jsLoader: {
+				asset_url : '<%= app.scripts.src %>/loader.js',
+				files: {
+					src : '../index.php'
+				}
+			},
+			jsFiles: {
+				asset_url : '<%= app.scripts.src %>/files.js',
+				files: {
+					src : '../index.php'
+				}
+			}
+		},
+
 		watch: {
 			scss: {
 				files: '<%= app.stylesheets.src %>/**/*.sass',
@@ -151,9 +178,10 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-grunticon');
 	grunt.loadNpmTasks('grunt-contrib-concat');
+	grunt.loadNpmTasks('grunt-cache-breaker');
 
 	// Кастомные задачи
-	grunt.registerTask('build', ['clean', 'concat:libs','concat:app', 'compass:dev', 'grunticon:svg']);
+	grunt.registerTask('build', ['clean', 'concat:libs','concat:app', 'compass:dev', 'grunticon:svg', 'cachebreaker']);
 	grunt.registerTask('deploy', ['clean', 'concat:libs','concat:app', 'compass:deploy', 'grunticon:svg']);
 	grunt.registerTask('default', ['build', 'watch']);
 };

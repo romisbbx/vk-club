@@ -57,7 +57,7 @@ WebApp.Loader.prototype = {
 
 		// фильтр для преобразования путей к загружаемым файлам
 		yepnope.addFilter(function (resourceObj) {
-			resourceObj.url = (config.debugMode ? config.locations.js : config.locations.jsBuild) + resourceObj.url;
+			resourceObj.url = (config.debugMode ? config.locations.js : config.locations.jsBuild) + resourceObj.url + config.revision;
 
 			return resourceObj;
 		});
