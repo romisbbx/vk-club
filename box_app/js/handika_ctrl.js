@@ -78,14 +78,7 @@ angular.module("vk").controller('HandikaCtrl', ['$scope', 'vkontakte', '$http', 
   };
 
   $scope.post = function(){
-    var phrase = 'Я выбрал эти призы в конкурсе «Коробка желаний»:';
-    if ($scope.current_user.sex == 1) {
-      phrase = 'Я выбрала эти призы в конкурсе «Коробка желаний»:';
-    }
-    else if ($scope.current_user.sex == 0) {
-      phrase = 'Мои призы в конкурсе «Коробка желаний»';
-    }
-
+    var phrase = 'Я хочу получить эти призы в конкурсе «Коробка Желаний» от @handika (Handika). Твой голос поможет мне это сделать — ставь «Мне нравится» :)';
     service.wallPost({message: phrase, attachments: 'photo'+cover.owner_id+'_' + cover.pid}, function(data){
       if (data.response.post_id) {
         $scope.posted = true;

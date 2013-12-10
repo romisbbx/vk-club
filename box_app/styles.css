@@ -6,6 +6,7 @@ body {
   font-size: 15px;
   background: #d9f6ff url(./images/gradient.jpg) bottom left repeat-x;
   padding-bottom: 50px;
+  min-height: 900px;
 }
 
 .b-body_step1 {

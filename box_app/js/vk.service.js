@@ -7,7 +7,7 @@ angular.module('vk').factory('vkontakte', function($q) {
     GID: 48475446,
     AID: 183475108,
     SUBSCRIBE_GID: 48475446,
-    WIDTH: 725,
+    WIDTH: 720,
     getAlbums: function(params, callback) {
       return VK.api('photos.getAlbums', params, callback);
     },
