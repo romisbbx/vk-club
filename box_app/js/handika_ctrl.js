@@ -1,6 +1,6 @@
 angular.module("vk").controller('HandikaCtrl', ['$scope', 'vkontakte', '$http', function($scope, vkontakte, $http){
   $scope.photos = [];
-  $scope.maxBalls = 1000;
+  $scope.maxBalls = 2500;
   $scope.allBalls = $scope.maxBalls;
   $scope.hasSelected = false;
   $scope.requestStarted = false;
@@ -191,17 +191,22 @@ angular.module("vk").controller('HandikaCtrl', ['$scope', 'vkontakte', '$http', 
         service.getPhotos({aid: album.aid, gid: service.GID}, function(photosData){
           for (var j = 0, maxJ = photosData.response.length; j < maxJ; j++) {
             var photo = {item: photosData.response[j]};
+            if (!photo.item.text.match(/^\d+\sбаллов./)) {
+              return false;
+            }
             var text = photo.item.text.split("<br>");
-            var master = text[1].split(', ');
+            if (text.length > 1) {
+              var master = text[1].split(', ');
+              photo.master = {
+                name: master[0],
+                avatar: master[2],
+                link: master[1]
+              };
+            }
             text = text[0].split('. ');
             photo.description = text[1];
-            photo.master = {
-              name: master[0],
-              avatar: master[2],
-              link: master[1]
-            };
-            photo.selected = false;
             photo.price = parseInt(text[0].split(' ')[0], 10);
+            photo.selected = false;
             $scope.photos.push(photo);
           }
           $scope.$digest();

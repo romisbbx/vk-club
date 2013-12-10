@@ -29,9 +29,9 @@
               <img ng-src="{{photo.item.src_big}}" class="b-photo" ng-click="changeSelection(photo)">
               <div class="b-selected-item">В коробке</div>
             </div>
-            <p class="b-photo-description">{{photo.description}}</p>
+            <p class="b-photo-description" >{{photo.description}}</p>
             <button class="b-button b-button_want" ng-click="changeSelection(photo)">{{buttonCaption(photo)}}</button>
-            <div class="b-master">
+            <div class="b-master" ng-show="photo.master">
               <div class="b-master-title">Приз предоставлен:</div>
               <div class="b-master-avatar">
                 <a ng-href="{{photo.master.link}}" target="_blank" title="{{photo.master.name}}"><img ng-src="{{photo.master.avatar}}"></a>
@@ -49,7 +49,7 @@
       <div class="finish-selection">
         <div class="b-center">
           <p ng-class="hasSelected && 'invisible'" class="b-hint">Чтобы продолжить, положи что-нибудь в коробку.</p>
-          <p class="see-more">Рассмотреть призы подробнее можно в альбоме конкурса — <a href="//vk.com/album-53083410_183726240" target="_blank">http://vk.com/handika/album...</a></p>
+          <p class="see-more">Рассмотреть призы подробнее можно в альбоме конкурса — <a href="//vk.com/album-48475446_183474927" target="_blank">http://vk.com/handika/album...</a></p>
           <img src="images/loader.gif" alt="" ng-show="requestStarted">
         </div>
         <button class="b-button b-button_big" ng-click="next()" ng-hide="requestStarted" ng-disabled="!hasSelected">Далее</button>
@@ -115,9 +115,9 @@
           Лайки друзей:
           <span class="b-likes-count">{{row.friends_likes}}</span>
           <span class="b-likes-mult">&times;</span>
-          <span class="b-likes-digit">5</span>
+          <span class="b-likes-digit">1</span>
           <span class="b-likes-eq">=</span>
-          <span class="b-likes-points">{{row.friends_likes * 5 | number}}</span>
+          <span class="b-likes-points">{{row.friends_likes | number}}</span>
         </div>
         <div class="b-likes-line">
           Лайки:
