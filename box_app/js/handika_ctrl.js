@@ -192,7 +192,7 @@ angular.module("vk").controller('HandikaCtrl', ['$scope', 'vkontakte', '$http', 
           for (var j = 0, maxJ = photosData.response.length; j < maxJ; j++) {
             var photo = {item: photosData.response[j]};
             if (!photo.item.text.match(/^\d+\sбаллов./)) {
-              return false;
+              continue;
             }
             var text = photo.item.text.split("<br>");
             if (text.length > 1) {
