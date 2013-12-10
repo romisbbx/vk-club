@@ -31,8 +31,10 @@ angular.module("vk").controller('HandikaCtrl', ['$scope', 'vkontakte', '$http', 
     $scope.step = step;
     var el = document.getElementById('step'+step);
     el.style.display = 'block';
-    var height = Math.max(el.clientHeight + 100, 900);
-    service.resizeWindow(service.WIDTH, height);
+    setTimeout(function(){
+      var height = Math.max(el.clientHeight + 100, 900);
+      service.resizeWindow(service.WIDTH, height);
+    }, 10);
   };
 
   $scope.start = function(){
