@@ -149,7 +149,7 @@
         <span class="count-span">{{statistics.length | pluralize : ['участник', 'участника', 'участников']}}</span>
       </div>
       <table id="stats" cellspacing="0" cellpadding="0"
-             class="stats" hand-scrollable="400"  hand-scrollable-var="showStatistics" style="margin-bottom: 20px;"
+             class="stats" hand-scrollable="550"  hand-scrollable-var="showStatistics" style="margin-bottom: 20px;"
              ng-mousemove="setCursor($event)">
         <tr ng-repeat="stat in statistics"
             ng-class="{'stat-row_my': stat.user_id == current_user.uid, 'stat-row_not-exists': !stat.exists}"
