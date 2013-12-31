@@ -38,7 +38,7 @@ foreach ($data as $info) {
   if (!isset($info->friends_likes)) {
     $info->friends_likes = 0;
   }
-  $info->points = $info->likes * 0.1 + $info->friends_likes*5;
+  $info->points = $info->likes * 0.1 + $info->friends_likes;
   if ($info->fails_count < 5) {
     $new_data[] = $info;
   }

@@ -4,10 +4,10 @@ angular.module('vk').factory('vkontakte', function($q) {
   var URL_VARS;
   // Public API here
   return {
-    GID: 53083410,
-    AID: 173879911,
+    GID: 48475446,
+    AID: 183475108,
     SUBSCRIBE_GID: 48475446,
-    WIDTH: 725,
+    WIDTH: 720,
     getAlbums: function(params, callback) {
       return VK.api('photos.getAlbums', params, callback);
     },
@@ -28,6 +28,7 @@ angular.module('vk').factory('vkontakte', function($q) {
     },
     uploadPhoto: function(aid, callback) {
       VK.api('photos.getUploadServer', {aid: aid, gid: this.GID}, function(data){
+        console.log(data);
         callback(data.response.upload_url);
       });
     },

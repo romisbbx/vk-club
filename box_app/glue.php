@@ -8,7 +8,7 @@ const X1 = 30;
 const X2 = 110;
 
 CONST H = 310;
-CONST SMALL_H = 155;
+CONST SMALL_H = 150;
 CONST WIDTH = 1010;
 CONST HEIGHT = 600;
 CONST FONT = 'Arial';
@@ -46,15 +46,19 @@ imagecopyresampled($result, $image, 0, 0, 0, 0, WIDTH, HEIGHT, WIDTH, HEIGHT);
 $header_color = imagecolorallocate($result, 247, 151, 29);
 $text_color = imagecolorallocate($result, 70, 51, 130);
 
-$choose_word = 'выбрал';
+
+$choose_text = 'Я выбрал эти призы в конкурсе «Коробка желаний»:';
+$text_left = 226;
 if ($input->sex == 1) {
-  $choose_word .= 'а';
+  $choose_text = 'Я выбрала эти призы в конкурсе «Коробка желаний»:';
+  $text_left = 216;
+}
+else if ($input->sex == 0) {
+  $choose_text = 'Мои призы в конкурсе «Коробка желаний»:';
+  $text_left = 246;
 }
 
-
-imagettftext($result, 24, 0, 226, 148, $header_color, FONT, "Я $choose_word эти призы в конкурсе Handika Box:");
-imagettftext($result, 15, 0, 223, 541, $text_color, FONT, 'С твоей помощью я смогу выиграть эти призы — жми «Мне нравится»!');
-imagettftext($result, 15, 0, 324, 571, $text_color, FONT, 'Или тоже прими участие на vk.com/handika.');
+imagettftext($result, 22, 0, $text_left, 148, $header_color, FONT, $choose_text);
 
 $map = array();
 if ($count == 1) {
