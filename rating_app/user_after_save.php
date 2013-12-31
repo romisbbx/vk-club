@@ -22,10 +22,10 @@ class App {
 		$this->setting = $this->db->getRow('SELECT * FROM setting WHERE id = 1');
 	}
 
-	// расчет смещения в рейтинге для первых 105 чел
+	// расчет смещения в рейтинге для первых 120 чел
 	function get_shift() {
-		$users = $this->db->getAll('SELECT * FROM user WHERE (id > 101 AND banned < 1) ORDER BY ?n DESC LIMIT 105', 'rating');
-		$users_old = $this->db->getAll('SELECT * FROM user_old WHERE (id > 101 AND banned < 1) ORDER BY ?n DESC LIMIT 105', 'rating');
+		$users = $this->db->getAll('SELECT * FROM user WHERE (id > 101 AND banned < 1) ORDER BY ?n DESC LIMIT 120', 'rating');
+		$users_old = $this->db->getAll('SELECT * FROM user_old WHERE (id > 101 AND banned < 1) ORDER BY ?n DESC LIMIT 120', 'rating');
 
 		if (!empty($users) && !empty($users_old)) {
 			// получаем смещение пользователя относительно предыдущего парсинга
@@ -41,16 +41,16 @@ class App {
 					}
 				}
 				if (!$in_array) {
-					$users[$i]['shift'] = 105;
+					$users[$i]['shift'] = 120;
 					$this->db->query('UPDATE user SET ?u WHERE id=?i', $users[$i], $users[$i]['id']);
 				}
 			}
 		}
 	}
 
-	// получение данных пользователей для первых 100 чел
+	// получение данных пользователей для первых 120 чел
 	function get_user_data($inputTableName, $outputTableName) {
-		$users = $this->db->getAll('SELECT * FROM ?n WHERE (id > 101 AND banned < 1) ORDER BY ?n DESC LIMIT 105', $inputTableName, 'rating');
+		$users = $this->db->getAll('SELECT * FROM ?n WHERE (id > 101 AND banned < 1) ORDER BY ?n DESC LIMIT 120', $inputTableName, 'rating');
 		$users_str = '';
 
 		for ($i = 0; $i < count($users); $i++) {

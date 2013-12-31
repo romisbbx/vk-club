@@ -7,13 +7,13 @@
 			{{ user.place + 1 }} место
 			{% if user.shift and user.shift != 0 %}
 				<span class="user-place-info {% if user.shift > 0 %}-top{% else %}-bottom{% endif %}">
-					{% if item.shift >= 100 %}
+					{% if user.shift >= 100 %}
 						>99
 					{% else %}
-						{% if item.shift > 0 %}
-							+{{ item.shift }}
+						{% if user.shift > 0 %}
+							+{{ user.shift }}
 						{% else %}
-							{{ item.shift }}
+							{{ user.shift }}
 						{% endif %}
 					{% endif %}
 				</span>
