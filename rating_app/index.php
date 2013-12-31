@@ -11,12 +11,12 @@
 	<meta name="viewport" content="width=device-width">
 
 	<link href='https://fonts.googleapis.com/css?family=Roboto:300,300italic,400,400italic,100,100italic&subset=cyrillic-ext' rel='stylesheet' type='text/css'>
-	<link type="text/css" rel="stylesheet" href="/rating_app/static/_build/css/icons/icons.data.svg.css?rel=1386277833094" />
-	<link id="js-revision" type="text/css" rel="stylesheet" href="/rating_app/static/_build/css/main.css?rel=1386277833091" />
+	<link type="text/css" rel="stylesheet" href="/rating_app/static/_build/css/icons/icons.data.svg.css?rel=1388462376312" />
+	<link id="js-revision" type="text/css" rel="stylesheet" href="/rating_app/static/_build/css/main.css?rel=1388462376309" />
 
 	<script type="text/javascript" src="https://vk.com/js/api/xd_connection.js?2"></script>
 	<script type="text/javascript" src="https://vk.com/js/api/openapi.js?101"></script>
-	<script type="text/javascript" src="/rating_app/static/js/loader.js?rel=1386277833113"></script>
+	<script type="text/javascript" src="/rating_app/static/js/loader.js?rel=1388462376314"></script>
 	<script type="text/javascript">
 		var revisionElem = document.getElementById('js-revision'),
 			revision = '?' + (revisionElem ? (revisionElem.getAttribute('href').split('?')[1]) : '0');
@@ -46,7 +46,7 @@
 
 		window.config.VK_POST_OFFSET = 60 * 9; // смещения для отложенного постинга в минутах
 	</script>
-	<script type="text/javascript" src="/rating_app/static/js/files.js?rel=1386277833116"></script>
+	<script type="text/javascript" src="/rating_app/static/js/files.js?rel=1388462376316"></script>
 	<script type="text/javascript">
 		VK.init(function() {
 			new WebApp.Loader();
