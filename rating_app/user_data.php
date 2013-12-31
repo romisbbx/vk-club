@@ -74,7 +74,7 @@ if (!empty($_POST['cur_user'])) {
 			$cur_user_page = array_slice($cur_user_page, $cur_user_page_index - 8, 15);
 
 			// смещение
-			$cur_user['shift'] = $cur_user_old_place - $cur_user['place'];
+			$cur_user['shift'] = $cur_user_old_place ? $cur_user_old_place - $cur_user['place'] : $cur_user['place'];
 		}
 	}
 } else {
