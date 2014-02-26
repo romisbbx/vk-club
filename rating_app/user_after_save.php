@@ -20,6 +20,7 @@ class App {
 		$this->vk = new vkapi(VK_API_ID, VK_SECRET_KEY);
 
 		$this->setting = $this->db->getRow('SELECT * FROM setting WHERE id = 1');
+		$this->ban_last_day = $this->db->getCol('SELECT id FROM ban_last_day');
 	}
 
 	// расчет смещения в рейтинге для первых 120 чел
@@ -111,17 +112,29 @@ class App {
 		$count = 5 - $user_last_day_count;
 
 		if ($count > 0) {
-			$data = $this->db->getAll('SELECT * FROM user_data WHERE (id > 101 AND banned < 1) ORDER BY ?n DESC, ?n ASC LIMIT ?i', 'rating', 'first_name', $count);
+			$data = $this->db->getAll('SELECT * FROM user_data WHERE (id > 101 AND banned < 1) ORDER BY ?n DESC, ?n ASC LIMIT ?i', 'rating', 'first_name', 120);
 
 			foreach ($data as $item) {
-				$item['rating'] = 0;
-				$item['repost'] = 0;
-				$item['like'] = 0;
-				$item['comment'] = 0;
-				$item['topic'] = 0;
-				$item['photo'] = 0;
+				$baned = false;
 
-				$this->db->query('INSERT INTO user_data_last_day SET ?u', $item);
+				// бан в однодневном рейтинге
+				foreach ($this->ban_last_day as $ban_item) {
+					if ($ban_item == $item['id']) {
+						$baned = true;
+						break;
+					}
+				}
+
+				if (!$baned) {
+					$item['rating'] = 0;
+					$item['repost'] = 0;
+					$item['like'] = 0;
+					$item['comment'] = 0;
+					$item['topic'] = 0;
+					$item['photo'] = 0;
+
+					$this->db->query('INSERT INTO user_data_last_day SET ?u ON DUPLICATE KEY UPDATE ?n=?i;', $item, 'id', $item['id']);
+				}
 			}
 		}
 	}
@@ -130,19 +143,31 @@ class App {
 		$data = $this->db->getAll('SELECT user.id, user.like-user_old.like like_diff FROM user, user_old WHERE (user.id=user_old.id AND user.like!=user_old.like)');
 
 		foreach ($data as $item) {
-			$ins['id'] = $item['id'];
-			$ins['like'] = $item['like_diff'];
-			$ins['rating'] = $item['like_diff'] * $this->setting['like'];
+			$baned = false;
 
-			$this->db->query('INSERT INTO user_last_day SET ?u ON DUPLICATE KEY UPDATE ?n=?i, rating=rating+?s', $ins, 'like', $ins['like'], $ins['rating']);
+			// бан в однодневном рейтинге
+			foreach ($this->ban_last_day as $ban_item) {
+				if ($ban_item == $item['id']) {
+					$baned = true;
+					break;
+				}
+			}
 
-			// story
-			$story['item_id'] = 0;
-			$story['type'] = 'like';
-			$story['date'] = time();
-			$story['text'] = $item['like_diff'];
+			if (!$baned) {
+				$ins['id'] = $item['id'];
+				$ins['like'] = $item['like_diff'];
+				$ins['rating'] = $item['like_diff'] * $this->setting['like'];
 
-			$this->db->query('INSERT INTO story SET ?u', $story);
+				$this->db->query('INSERT INTO user_last_day SET ?u ON DUPLICATE KEY UPDATE ?n=?i, rating=rating+?s', $ins, 'like', $ins['like'], $ins['rating']);
+
+				// story
+				$story['item_id'] = 0;
+				$story['type'] = 'like';
+				$story['date'] = time();
+				$story['text'] = $item['like_diff'];
+
+				$this->db->query('INSERT INTO story SET ?u', $story);
+			}
 		}
 	}
 
@@ -150,19 +175,31 @@ class App {
 		$data = $this->db->getAll('SELECT user.id, user.repost-user_old.repost repost_diff FROM user, user_old WHERE (user.id=user_old.id AND user.repost!=user_old.repost)');
 
 		foreach ($data as $item) {
-			$ins['id'] = $item['id'];
-			$ins['repost'] = $item['repost_diff'];
-			$ins['rating'] = $item['repost_diff'] * $this->setting['repost'];
+			$baned = false;
 
-			$this->db->query('INSERT INTO user_last_day SET ?u ON DUPLICATE KEY UPDATE ?n=?i, rating=rating+?s', $ins, 'repost', $ins['repost'], $ins['rating']);
+			// бан в однодневном рейтинге
+			foreach ($this->ban_last_day as $ban_item) {
+				if ($ban_item == $item['id']) {
+					$baned = true;
+					break;
+				}
+			}
 
-			// story
-			$story['item_id'] = 0;
-			$story['type'] = 'repost';
-			$story['date'] = time();
-			$story['text'] = $item['repost_diff'];
+			if (!$baned) {
+				$ins['id'] = $item['id'];
+				$ins['repost'] = $item['repost_diff'];
+				$ins['rating'] = $item['repost_diff'] * $this->setting['repost'];
 
-			$this->db->query('INSERT INTO story SET ?u', $story);
+				$this->db->query('INSERT INTO user_last_day SET ?u ON DUPLICATE KEY UPDATE ?n=?i, rating=rating+?s', $ins, 'repost', $ins['repost'], $ins['rating']);
+
+				// story
+				$story['item_id'] = 0;
+				$story['type'] = 'repost';
+				$story['date'] = time();
+				$story['text'] = $item['repost_diff'];
+
+				$this->db->query('INSERT INTO story SET ?u', $story);
+			}
 		}
 	}
 
